@@ -1,29 +1,75 @@
-# Yatin Bhalla — AI PM Portfolio
+<div align="center">
 
-Dark, motion-rich single-page portfolio. Built with React 19, Vite, Tailwind CSS v4, and Motion (Framer Motion).
+# Yatin Bhalla — AI Product Manager
 
-## Local development
+**Portfolio site · Products with receipts**
+
+Business operator turned AI PM. 3 businesses grown ~30% YoY over 7 years · 20+ AI products shipped 0→1 · 4+ in daily production use.
+
+[![React](https://img.shields.io/badge/React_19-0a0c18?logo=react&logoColor=61DAFB)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite_7-0a0c18?logo=vite&logoColor=BD34FE)](https://vite.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-0a0c18?logo=tailwindcss&logoColor=38BDF8)](https://tailwindcss.com)
+[![Motion](https://img.shields.io/badge/Motion-0a0c18?logo=framer&logoColor=8B5CF6)](https://motion.dev)
+
+[LinkedIn](https://www.linkedin.com/in/yatinbhalla42/) · [GitHub](https://github.com/yatinbhalla) · [X](https://x.com/yatinbhalla42) · [Email](mailto:yatinbhalla42@gmail.com)
+
+</div>
+
+---
+
+## What this is
+
+A dark, motion-rich single-page portfolio built for recruiters and hiring managers evaluating me for **AI Product Manager** roles. Every section is designed around the same principle as my products: claims backed by numbers.
+
+| Section | What it shows |
+| --- | --- |
+| **Hero** | Rotating titles, live stat counters (20+ products, 30% YoY, 90%+ scores) |
+| **About** | The operator → AI builder → PM student arc |
+| **Traits & Mindset** | 5 cards on how I'm wired — operator's ownership, builder's bias, metrics over opinions |
+| **Featured Work** | 6 flagship products with metrics, stack, repo + live links |
+| **How I Think** | 6-step loop: Discover → Define/Research → AI Workflow Planning → Prototype/MVP → Ship → Measure |
+| **All Projects** | Every public repo, fetched **live from the GitHub API** on each visit, searchable |
+| **Skills & Tools** | Product craft, AI/technical skills, and an animated tool marquee |
+| **Certificates & Programs** | BITSoM × Masai (90%+), Outskill, Google for Startups — with proof on Drive |
+| **Contact** | Email, LinkedIn, GitHub, X, click-to-call, resume download |
+
+## Stack
+
+- **React 19 + TypeScript** — strict mode, zero runtime dependencies beyond the essentials
+- **Vite 7** — static build, deploys anywhere
+- **Tailwind CSS v4** — design tokens via `@theme`, glassmorphism + gradient system
+- **Motion** (Framer Motion) — scroll-reveal, rotating hero titles, animated counters
+- **GitHub API** — the All Projects grid self-updates; a baked-in snapshot ([src/data/repos.ts](src/data/repos.ts)) covers rate-limit/offline cases
+
+## Run it locally
 
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm run build    # outputs static site to dist/
+npm run build    # static output in dist/
 ```
 
-## Deploy to Vercel
+## Deploy
 
-1. Push this folder to a GitHub repo (e.g. `yatinbhalla/portfolio`).
-2. Go to [vercel.com/new](https://vercel.com/new) → Import the repo.
-3. Vercel auto-detects Vite. Accept defaults (build: `npm run build`, output: `dist`) → Deploy.
+**Vercel** — [vercel.com/new](https://vercel.com/new) → import `yatinbhalla/portfolio` → framework auto-detected (Vite) → Deploy.
 
-## Deploy to Render
+**Render** — Dashboard → New → Static Site → connect repo → build `npm run build`, publish directory `dist`.
 
-1. Push to GitHub.
-2. Render dashboard → **New → Static Site** → connect the repo.
-3. Build command: `npm run build` · Publish directory: `dist` → Create.
+Both redeploy automatically on every push to `main`.
 
 ## Updating content
 
-- All text/content lives in [src/data/profile.ts](src/data/profile.ts) — hero, about, mindset, featured projects, skills, education, certifications.
-- The **All Projects** grid fetches your public repos live from the GitHub API on every visit; [src/data/repos.ts](src/data/repos.ts) is the offline/rate-limit fallback snapshot (refresh it occasionally).
-- Replace `public/Yatin_Bhalla_Resume.pdf` whenever your resume changes — the download buttons point to it.
+Everything editable lives in two places:
+
+- [src/data/profile.ts](src/data/profile.ts) — all copy: hero, about, mindset, featured projects, process steps, skills, education, certifications
+- [public/Yatin_Bhalla_Resume.pdf](public/Yatin_Bhalla_Resume.pdf) — swap this file when the resume changes; every download button points at it
+
+New GitHub repos appear in the All Projects grid automatically — no code change needed.
+
+---
+
+<div align="center">
+
+Built with Claude Code · © Yatin Bhalla
+
+</div>
