@@ -41,30 +41,7 @@ A dark, motion-rich single-page portfolio built for recruiters and hiring manage
 - **Motion** (Framer Motion) — scroll-reveal, rotating hero titles, animated counters
 - **GitHub API** — the All Projects grid self-updates; a baked-in snapshot ([src/data/repos.ts](src/data/repos.ts)) covers rate-limit/offline cases
 
-## Run it locally
 
-```bash
-npm install
-npm run dev      # http://localhost:5173
-npm run build    # static output in dist/
-```
-
-## Deploy
-
-**Vercel** — [vercel.com/new](https://vercel.com/new) → import `yatinbhalla/portfolio` → framework auto-detected (Vite) → Deploy.
-
-**Render** — Dashboard → New → Static Site → connect repo → build `npm run build`, publish directory `dist`.
-
-Both redeploy automatically on every push to `main`.
-
-## Updating content
-
-Everything editable lives in two places:
-
-- [src/data/profile.ts](src/data/profile.ts) — all copy: hero, about, mindset, featured projects, process steps, skills, education, certifications
-- [public/Yatin_Bhalla_Resume.pdf](public/Yatin_Bhalla_Resume.pdf) — swap this file when the resume changes; every download button points at it
-
-New GitHub repos appear in the All Projects grid automatically — no code change needed.
 
 ---
 
