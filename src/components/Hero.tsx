@@ -51,7 +51,7 @@ export function Hero() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: "-100%", opacity: 0 }}
                   transition={{ duration: 0.45, ease: "easeOut" }}
-                  className="text-gradient absolute left-0 whitespace-nowrap"
+                  className="text-gradient absolute top-0 left-0 whitespace-nowrap"
                 >
                   {profile.rotatingTitles[titleIdx]}
                 </motion.span>
