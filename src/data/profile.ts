@@ -14,7 +14,7 @@ export const profile = {
     "AI Product Manager",
     "0→1 Builder",
     "Business Operator",
-    "Voice-AI Product Builder",
+    "Voice-AI Builder",
   ],
 };
 

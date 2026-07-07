@@ -40,10 +40,16 @@ export function Hero() {
             Open to AI PM roles
           </div>
 
-          <h1 className="font-display mt-6 text-4xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 className="font-display mt-6 text-3xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl">
             Hi, I'm {profile.name.split(" ")[0]} —
             <br />
-            <span className="relative inline-block h-[1.25em] w-full overflow-hidden align-bottom sm:w-auto sm:min-w-[10ch]">
+            <span className="inline-grid max-w-full overflow-hidden align-bottom">
+              {/* Invisible copies of every title keep the box sized to the longest one */}
+              {profile.rotatingTitles.map((t) => (
+                <span key={t} aria-hidden className="invisible whitespace-nowrap [grid-area:1/1]">
+                  {t}
+                </span>
+              ))}
               <AnimatePresence mode="wait">
                 <motion.span
                   key={titleIdx}
@@ -51,7 +57,7 @@ export function Hero() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: "-100%", opacity: 0 }}
                   transition={{ duration: 0.45, ease: "easeOut" }}
-                  className="text-gradient absolute top-0 left-0 whitespace-nowrap"
+                  className="text-gradient whitespace-nowrap [grid-area:1/1]"
                 >
                   {profile.rotatingTitles[titleIdx]}
                 </motion.span>
