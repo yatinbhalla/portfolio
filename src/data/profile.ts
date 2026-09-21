@@ -29,7 +29,7 @@ export const about = {
   heading: "From the shop floor to the product roadmap",
   paragraphs: [
     "For seven years I've run three family businesses — Neha Chappal Store, Krishna Handloom, and Shree Radhe Trading Co. — owning P&L, pricing, inventory, and 20+ supplier relationships end to end. That means I've spent thousands of hours face-to-face with real customers, watching exactly where products, pricing, and processes break.",
-    "When generative AI arrived, I did what operators do: I built. Every PM concept I learned — PRDs, JTBD, RAG, evals, prompt engineering — became a real, working tool solving a real problem in my own businesses or for people around me. A GST billing app that cut invoicing from 2 minutes to 20 seconds. A self-healing Meesho automation that cut listing time 90%. A creative pipeline that replaced our photography agency.",
+    "When generative AI arrived, I did what operators do: I built. Every PM concept I learned — PRDs, JTBD, RAG, evals, prompt engineering — became a real, working tool solving a real problem in my own businesses or for people around me. A GST billing app that cut invoicing from 2 minutes to 20 seconds. A self-healing Meesho automation that cut listing time 90%. A creative pipeline that replaced our photography agency. Full-catalog SEO that grew organic reach from near-zero at ₹0 paid spend.",
     "Now I'm formalizing that instinct at BITSoM × Masai's PM with Agentic & Generative AI program (90%+ across five consecutive modules) — and looking for an AI PM role where builder's bias, operator's ownership, and genuine customer empathy compound.",
   ],
 };
@@ -69,6 +69,7 @@ export type FeaturedProject = {
   metrics: string[];
   stack: string[];
   repo: string;
+  moreRepos?: string[];
   live?: string;
   accent: string;
 };
@@ -78,21 +79,22 @@ export const featured: FeaturedProject[] = [
     name: "Voice Matters",
     headline: "Vernacular voice-AI welfare assistant",
     description:
-      "Hindi-first voice PWA: speak a question, get a spoken government-scheme recommendation. Built from 10 customer interviews across 3 validated personas, designed for low-end Android phones on 2G networks.",
-    metrics: ["<0.5% hallucination rate", "10 interviews → 3 personas", "Built for 2G networks"],
+      "Hindi-first voice PWA for low-literacy Tier 2–3 workers who miss welfare schemes they qualify for. I owned the PRD, 60+ Jira tickets across 3 sprints, and a 9-pillar ethics framework, leading a 4-person team to a 6-screen PWA built for low-end Android on 2G.",
+    metrics: ["<0.5% hallucination rate", "3 validated personas", "4-person team · 3 sprints"],
     stack: ["Sarvam STT/TTS", "OpenAI Embeddings", "Pinecone RAG", "FastAPI", "PostgreSQL"],
     repo: "https://github.com/yatinbhalla/Voice-Matters",
     live: "https://voice-matters-web.onrender.com",
     accent: "#8b5cf6",
   },
   {
-    name: "Meesho-Listing",
-    headline: "Self-healing catalog automation",
+    name: "Marketplace Listing Agents",
+    headline: "Self-healing listing agents for Meesho & Flipkart",
     description:
-      "Turns a single Meesho walk-through into thousands of one-click listings. A self-healing browser copilot that recovers from UI changes on its own — from idea to validated proof-of-concept in weeks.",
-    metrics: ["~90% listing time cut", "5 min → 30 s per listing", "Thousands of listings"],
+      "A record-replay agent that turns one Meesho walk-through into thousands of one-click listings, recovering via Gemini when the DOM changes. Then I ported the same engine to Flipkart Seller Hub.",
+    metrics: ["~90% listing time cut", "5 min → 30 s per listing", "One engine, two marketplaces"],
     stack: ["React", "Node.js", "Playwright", "Gemini AI"],
     repo: "https://github.com/yatinbhalla/Meesho-listing",
+    moreRepos: ["https://github.com/yatinbhalla/Flipkart-listing"],
     accent: "#22d3ee",
   },
   {
@@ -109,8 +111,8 @@ export const featured: FeaturedProject[] = [
     name: "PM-Trainer",
     headline: "Daily PM practice platform",
     description:
-      "Gemini generates daily product scenarios and evaluates responses like a senior PM. Delivered with Agile/Scrum ceremonies, instrumented for retention, and iterated on real usage data.",
-    metrics: ["~8.5/10 beta rating", "<5% hallucinations", "Daily challenge loop"],
+      "An AI coach that generates daily PM scenarios and grades responses like a senior PM, with output locked to a strict JSON schema. XP and streaks drive retention.",
+    metrics: ["~8.5/10 beta rating", "<5% hallucinations", "XP + streak retention loop"],
     stack: ["Gemini", "React 19", "TypeScript", "Zustand"],
     repo: "https://github.com/yatinbhalla/PM-trainer",
     live: "https://ai.studio/apps/d274e719-0306-47d6-8019-22ca22b871f8?fullscreenApplet=true",
@@ -177,7 +179,7 @@ export const skills = {
   product: [
     "Product Discovery", "JTBD", "User Research", "Prioritization (MoSCoW)",
     "Roadmapping", "PRD Writing", "OKRs", "North Star Metric", "A/B Testing",
-    "Sprint Planning", "Stakeholder Management", "Agile / Scrum",
+    "Sprint Planning", "Go-to-Market", "Stakeholder Management", "Agile / Scrum",
     "User Stories", "Acceptance Criteria", "Wireframing", "User Flows",
   ],
   ai: [

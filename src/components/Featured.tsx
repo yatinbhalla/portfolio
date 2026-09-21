@@ -30,15 +30,19 @@ export function Featured() {
                     </p>
                   </div>
                   <div className="flex shrink-0 gap-2">
-                    <a
-                      href={p.repo}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${p.name} repository`}
-                      className="glass rounded-full p-2.5 text-slate-300 transition-colors hover:text-white"
-                    >
-                      <Github size={17} />
-                    </a>
+                    {[p.repo, ...(p.moreRepos ?? [])].map((url) => (
+                      <a
+                        key={url}
+                        href={url}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${url.split("/").pop()} repository`}
+                        title={url.split("/").pop()}
+                        className="glass rounded-full p-2.5 text-slate-300 transition-colors hover:text-white"
+                      >
+                        <Github size={17} />
+                      </a>
+                    ))}
                     {p.live && (
                       <a
                         href={p.live}
