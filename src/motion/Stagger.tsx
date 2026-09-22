@@ -1,0 +1,73 @@
+import type { ReactNode } from "react";
+import { motion } from "motion/react";
+import { useMotionPrefs } from "./context";
+import { slideItem, staggerParent } from "./variants";
+
+const groupTags = { div: motion.div, ul: motion.ul, section: motion.section };
+const itemTags = { div: motion.div, li: motion.li, article: motion.article };
+
+/**
+ * One IntersectionObserver for a whole grid, with children entering as a real
+ * variant cascade — replaces N independent reveals each carrying a hand-computed
+ * delay, which times raggedly when a whole row enters at once.
+ */
+export function StaggerGroup({
+  children,
+  stagger = 0.06,
+  delayChildren = 0,
+  once = true,
+  amount = 0.2,
+  className = "",
+  as = "div",
+}: {
+  children: ReactNode;
+  stagger?: number;
+  delayChildren?: number;
+  once?: boolean;
+  amount?: number;
+  className?: string;
+  as?: keyof typeof groupTags;
+}) {
+  const { reduced } = useMotionPrefs();
+  const Tag = groupTags[as];
+  return (
+    <Tag
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once, amount }}
+      variants={staggerParent(reduced ? 0 : stagger, reduced ? 0 : delayChildren)}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+export function StaggerItem({
+  children,
+  className = "",
+  direction = "up",
+  distance = 20,
+  as = "div",
+  hoverLift = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  direction?: "up" | "down" | "left" | "right";
+  distance?: number;
+  as?: keyof typeof itemTags;
+  /** Replaces the CSS lift that .card-hover used to own. */
+  hoverLift?: number;
+}) {
+  const { reduced } = useMotionPrefs();
+  const Tag = itemTags[as];
+  return (
+    <Tag
+      className={className}
+      variants={slideItem(direction, reduced ? 0 : distance)}
+      whileHover={hoverLift && !reduced ? { y: -hoverLift } : undefined}
+    >
+      {children}
+    </Tag>
+  );
+}

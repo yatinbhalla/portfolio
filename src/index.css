@@ -11,7 +11,6 @@
 
   --animate-marquee: marquee 32s linear infinite;
   --animate-float: float 8s ease-in-out infinite;
-  --animate-pulse-slow: pulse 5s ease-in-out infinite;
 
   @keyframes marquee {
     from { transform: translateX(0); }
@@ -23,15 +22,37 @@
   }
 }
 
+:root {
+  /* Keep in sync with NAV_H in src/motion/tokens.ts */
+  --nav-h: 68px;
+}
+
+/*
+ * overflow-x: clip, NOT hidden. `hidden` propagates to the viewport and makes it
+ * horizontally scrollable (scrollbar suppressed but scrollLeft settable), which is
+ * the classic silent killer of position: sticky. `clip` never establishes a scroll
+ * container, so the sticky scenes resolve against the viewport as intended.
+ */
 html {
   background: var(--color-ink);
+  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-body);
   background: var(--color-ink);
   color: #e2e8f0;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* Anchor targets clear the fixed nav (covers the non-Lenis and keyboard paths). */
+:where([id]) {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+html.is-locked,
+html.is-locked body {
+  overflow: hidden;
 }
 
 ::selection {
@@ -50,20 +71,41 @@ body {
   color: transparent;
 }
 
-/* Glass card */
+/*
+ * Surface system.
+ *
+ * .glass keeps backdrop-filter and is reserved for the two elements that genuinely
+ * overlay scrolling content: the nav and the hero badge. Everything else uses
+ * .panel, which is visually identical over this flat dark background but costs no
+ * backdrop readback during scroll — the single biggest frame-budget win on the page.
+ */
 .glass {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
 }
 
-.glass-hover {
-  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+.panel {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
-.glass-hover:hover {
+
+/* Opaque: required wherever cards overlap (the Featured stack) or they read as mush. */
+.panel-solid {
+  background: #0b0d1a;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/*
+ * Hover chrome only. The lift lives in Motion's whileHover, never here — a CSS
+ * transform silently loses to Motion's inline style on promoted elements.
+ */
+.card-hover {
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.card-hover:hover {
   border-color: rgba(139, 92, 246, 0.45);
   box-shadow: 0 0 40px rgba(139, 92, 246, 0.15);
-  transform: translateY(-4px);
 }
 
 /* Background grid */
@@ -75,8 +117,66 @@ body {
   mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 40%, transparent 100%);
 }
 
+/* Marquee is paused whenever it is offscreen. */
+.marquee-paused {
+  animation-play-state: paused !important;
+}
+
+/* Spotlight repaints stay inside the hovered card's own layer. */
+.spotlight-host {
+  contain: paint;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #05060f; }
 ::-webkit-scrollbar-thumb { background: #1e1b36; border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: #312a56; }
+
+/*
+ * Reduced motion. MotionConfig reducedMotion="user" only neuters animate/whileInView
+ * transforms — it does nothing to CSS keyframes, so they are stopped here, and
+ * nothing to MotionValues/sticky/Lenis, which are handled in JS via useMotionPrefs.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-float,
+  .animate-marquee,
+  .animate-ping {
+    animation: none !important;
+  }
+
+  /* All tools stay readable once the marquee stops travelling. */
+  .marquee-track {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto !important;
+    transform: none !important;
+  }
+}
