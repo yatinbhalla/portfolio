@@ -37,7 +37,7 @@ export function About() {
         <div className="space-y-4 lg:col-span-2">
           {milestones.map((m, i) => (
             <Reveal key={m.title} delay={0.15 + i * 0.1}>
-              <div className="glass glass-hover flex gap-4 rounded-2xl p-5">
+              <div className="panel card-hover flex gap-4 rounded-2xl p-5">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
                   <m.icon size={20} />
                 </div>

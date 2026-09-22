@@ -22,7 +22,7 @@ export function Skills() {
       <div className="grid gap-5 lg:grid-cols-3">
         {groups.map((g, i) => (
           <Reveal key={g.title} delay={i * 0.1}>
-            <div className="glass glass-hover h-full rounded-2xl p-6">
+            <div className="panel card-hover h-full rounded-2xl p-6">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
                   <g.icon size={19} />
@@ -50,7 +50,7 @@ export function Skills() {
           {[...skills.tools, ...skills.tools].map((t, i) => (
             <span
               key={`${t}-${i}`}
-              className="glass font-display rounded-full px-5 py-2 text-sm whitespace-nowrap text-slate-300"
+              className="panel font-display rounded-full px-5 py-2 text-sm whitespace-nowrap text-slate-300"
             >
               {t}
             </span>

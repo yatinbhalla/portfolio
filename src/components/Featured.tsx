@@ -16,7 +16,7 @@ export function Featured() {
       <div className="grid gap-6 lg:grid-cols-2">
         {featured.map((p, i) => (
           <Reveal key={p.name} delay={(i % 2) * 0.1}>
-            <article className="glass glass-hover group relative h-full overflow-hidden rounded-3xl p-7">
+            <article className="panel card-hover group relative h-full overflow-hidden rounded-3xl p-7">
               <div
                 className="absolute -top-20 -right-20 h-48 w-48 rounded-full opacity-15 blur-3xl transition-opacity duration-500 group-hover:opacity-30"
                 style={{ background: p.accent }}
@@ -38,7 +38,7 @@ export function Featured() {
                         rel="noreferrer"
                         aria-label={`${url.split("/").pop()} repository`}
                         title={url.split("/").pop()}
-                        className="glass rounded-full p-2.5 text-slate-300 transition-colors hover:text-white"
+                        className="panel rounded-full p-2.5 text-slate-300 transition-colors hover:text-white"
                       >
                         <Github size={17} />
                       </a>
@@ -49,7 +49,7 @@ export function Featured() {
                         target="_blank"
                         rel="noreferrer"
                         aria-label={`${p.name} live demo`}
-                        className="glass rounded-full p-2.5 text-slate-300 transition-colors hover:text-white"
+                        className="panel rounded-full p-2.5 text-slate-300 transition-colors hover:text-white"
                       >
                         <ExternalLink size={17} />
                       </a>

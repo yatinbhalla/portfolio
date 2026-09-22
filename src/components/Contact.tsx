@@ -47,7 +47,7 @@ export function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="glass relative overflow-hidden rounded-3xl p-10 text-center sm:p-16"
+        className="panel relative overflow-hidden rounded-3xl p-10 text-center sm:p-16"
       >
         <div className="absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-violet-600/20 blur-[100px]" />
         <div className="relative">
@@ -68,7 +68,7 @@ export function Contact() {
                 key={c.label}
                 href={c.href}
                 {...(c.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="glass glass-hover flex flex-col items-center gap-2 rounded-2xl p-5"
+                className="panel card-hover flex flex-col items-center gap-2 rounded-2xl p-5"
               >
                 <c.icon size={22} className="text-cyan-300" />
                 <span className="font-display text-sm font-semibold text-white">{c.label}</span>

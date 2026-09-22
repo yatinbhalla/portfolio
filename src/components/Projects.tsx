@@ -40,7 +40,7 @@ export function Projects() {
           {live ? "Fetched live from GitHub" : "Snapshot from GitHub"} ·{" "}
           {filtered.length} public repositories
         </p>
-        <label className="glass flex w-full items-center gap-2 rounded-full px-4 py-2.5 sm:w-72">
+        <label className="panel flex w-full items-center gap-2 rounded-full px-4 py-2.5 sm:w-72">
           <Search size={16} className="shrink-0 text-slate-500" />
           <input
             value={query}
@@ -54,7 +54,7 @@ export function Projects() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((r, i) => (
           <Reveal key={r.name} delay={(i % 3) * 0.06}>
-            <article className="glass glass-hover flex h-full flex-col rounded-2xl p-5">
+            <article className="panel card-hover flex h-full flex-col rounded-2xl p-5">
               <div className="flex items-start justify-between gap-3">
                 <h3 className="font-display font-semibold break-all text-white">{r.name}</h3>
                 <div className="flex shrink-0 gap-1.5">

@@ -26,7 +26,7 @@ export function Mindset() {
           const Icon = icons[m.icon as keyof typeof icons];
           return (
             <Reveal key={m.title} delay={i * 0.08}>
-              <div className="glass glass-hover h-full rounded-2xl p-6">
+              <div className="panel card-hover h-full rounded-2xl p-6">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
                   <Icon size={22} />
                 </div>

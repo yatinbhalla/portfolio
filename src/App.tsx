@@ -1,3 +1,4 @@
+import { MotionProvider } from "./motion/MotionProvider";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
@@ -12,20 +13,22 @@ import { Footer } from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="relative">
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Mindset />
-        <Featured />
-        <HowIThink />
-        <Projects />
-        <Skills />
-        <Credentials />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <MotionProvider>
+      <div className="relative">
+        <Nav />
+        <main>
+          <Hero />
+          <About />
+          <Mindset />
+          <Featured />
+          <HowIThink />
+          <Projects />
+          <Skills />
+          <Credentials />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </MotionProvider>
   );
 }

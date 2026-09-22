@@ -80,7 +80,7 @@ export function Hero() {
             <a
               href={profile.resumePath}
               download
-              className="glass glass-hover flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-white"
+              className="panel card-hover flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-white"
             >
               <Download size={18} /> Resume
             </a>
@@ -90,7 +90,7 @@ export function Hero() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"
-                className="glass glass-hover rounded-full p-3 text-slate-300 hover:text-white"
+                className="panel card-hover rounded-full p-3 text-slate-300 hover:text-white"
               >
                 <Github size={20} />
               </a>
@@ -99,7 +99,7 @@ export function Hero() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
-                className="glass glass-hover rounded-full p-3 text-slate-300 hover:text-white"
+                className="panel card-hover rounded-full p-3 text-slate-300 hover:text-white"
               >
                 <Linkedin size={20} />
               </a>
@@ -108,14 +108,14 @@ export function Hero() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="X (Twitter)"
-                className="glass glass-hover rounded-full p-3 text-slate-300 hover:text-white"
+                className="panel card-hover rounded-full p-3 text-slate-300 hover:text-white"
               >
                 <XIcon size={20} />
               </a>
               <a
                 href={`mailto:${profile.email}`}
                 aria-label="Email"
-                className="glass glass-hover rounded-full p-3 text-slate-300 hover:text-white"
+                className="panel card-hover rounded-full p-3 text-slate-300 hover:text-white"
               >
                 <Mail size={20} />
               </a>
@@ -131,7 +131,7 @@ export function Hero() {
           className="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4"
         >
           {stats.map((s) => (
-            <div key={s.label} className="glass rounded-2xl p-5">
+            <div key={s.label} className="panel rounded-2xl p-5">
               <div className="font-display text-3xl font-bold text-gradient sm:text-4xl">
                 <Counter target={s.value} />
                 {s.suffix}

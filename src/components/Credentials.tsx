@@ -21,7 +21,7 @@ export function Credentials() {
           <div className="space-y-4">
             {education.map((e, i) => (
               <Reveal key={e.title} delay={i * 0.1}>
-                <div className="glass glass-hover rounded-2xl p-6">
+                <div className="panel card-hover rounded-2xl p-6">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <h4 className="font-display font-semibold text-white">{e.title}</h4>
                     <span className="text-xs font-semibold tracking-wider text-violet-300 uppercase">
@@ -45,7 +45,7 @@ export function Credentials() {
               href="https://drive.google.com/drive/folders/1iKwJO7VLUS55F2ivLvSuGxgIRQ0nngXW?usp=sharing"
               target="_blank"
               rel="noreferrer"
-              className="glass glass-hover flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-cyan-300 hover:text-white"
+              className="panel card-hover flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-cyan-300 hover:text-white"
             >
               View certificates <ExternalLink size={13} />
             </a>
@@ -53,7 +53,7 @@ export function Credentials() {
           <div className="space-y-4">
             {certifications.map((c, i) => (
               <Reveal key={c.title} delay={0.1 + i * 0.1}>
-                <div className="glass glass-hover flex items-center gap-4 rounded-2xl p-5">
+                <div className="panel card-hover flex items-center gap-4 rounded-2xl p-5">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
                     <Award size={19} />
                   </div>
