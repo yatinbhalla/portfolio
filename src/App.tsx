@@ -1,4 +1,5 @@
 import { MotionProvider } from "./motion/MotionProvider";
+import { IntroLoader } from "./components/IntroLoader";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
@@ -14,6 +15,8 @@ import { Footer } from "./components/Footer";
 export default function App() {
   return (
     <MotionProvider>
+      {/* Outside the relative wrapper: a transformed ancestor would break both this and the fixed nav. */}
+      <IntroLoader />
       <div className="relative">
         <Nav />
         <main>

@@ -1,24 +1,33 @@
-import { useEffect, useRef, useState } from "react";
-import { useInView } from "motion/react";
+import { useEffect, useRef } from "react";
+import { animate, motion, useInView, useMotionValue, useTransform } from "motion/react";
+import { useMotionPrefs } from "../motion/context";
+import { EASE_OUT } from "../motion/tokens";
 
-export function Counter({ target, duration = 1400 }: { target: number; duration?: number }) {
+/**
+ * Count-up driven by a MotionValue: Motion renders the value straight to the DOM,
+ * so the whole animation costs zero React renders (the previous rAF + setState
+ * version cost ~84 renders per counter).
+ *
+ * The animated span is aria-hidden and the caller supplies the real label, so
+ * assistive tech reads the final figure rather than a stream of numbers.
+ */
+export function Counter({ target, duration = 1.4 }: { target: number; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  const [value, setValue] = useState(0);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const { reduced } = useMotionPrefs();
+
+  const count = useMotionValue(reduced ? target : 0);
+  const rounded = useTransform(count, (v) => Math.round(v));
 
   useEffect(() => {
-    if (!inView) return;
-    let raf: number;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const p = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setValue(Math.round(eased * target));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, target, duration]);
+    if (!inView || reduced) return;
+    const controls = animate(count, target, { duration, ease: EASE_OUT });
+    return () => controls.stop();
+  }, [inView, target, duration, count, reduced]);
 
-  return <span ref={ref}>{value}</span>;
+  return (
+    <motion.span ref={ref} aria-hidden="true">
+      {rounded}
+    </motion.span>
+  );
 }
