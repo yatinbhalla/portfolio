@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { fallbackRepos, type Repo } from "../data/repos";
 
 const EXCLUDED = new Set(["yatinbhalla"]); // profile README repo
@@ -13,8 +13,11 @@ export function useGithubRepos() {
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
       .then((data: Repo[]) => {
         if (cancelled || !Array.isArray(data) || data.length === 0) return;
-        setRepos(data.filter((r) => !EXCLUDED.has(r.name)));
-        setLive(true);
+        // Non-urgent: keeps the 23-card re-render off a scroll frame.
+        startTransition(() => {
+          setRepos(data.filter((r) => !EXCLUDED.has(r.name)));
+          setLive(true);
+        });
       })
       .catch(() => {
         /* keep fallback snapshot */

@@ -1,6 +1,10 @@
-import { Section, Reveal } from "./Section";
+import { useRef } from "react";
+import { useInView } from "motion/react";
+import { Section } from "./Section";
 import { skills } from "../data/profile";
 import { Compass, Sparkles, Wrench } from "lucide-react";
+import { StaggerGroup, StaggerItem } from "../motion/Stagger";
+import { SpotlightCard } from "../motion/SpotlightCard";
 
 const groups = [
   { title: "Product Craft", icon: Compass, items: skills.product },
@@ -9,6 +13,11 @@ const groups = [
 ];
 
 export function Skills() {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  // No `once` here: the marquee should stop again every time it leaves the
+  // viewport, rather than burning compositor work for the whole session.
+  const marqueeVisible = useInView(marqueeRef, { amount: 0 });
+
   return (
     <Section
       id="skills"
@@ -19,34 +28,42 @@ export function Skills() {
         </>
       }
     >
-      <div className="grid gap-5 lg:grid-cols-3">
-        {groups.map((g, i) => (
-          <Reveal key={g.title} delay={i * 0.1}>
-            <div className="panel card-hover h-full rounded-2xl p-6">
+      <StaggerGroup className="grid gap-5 lg:grid-cols-3" stagger={0.1}>
+        {groups.map((g) => (
+          <StaggerItem key={g.title} hoverLift={6} className="h-full">
+            <SpotlightCard className="panel card-hover h-full rounded-2xl p-6">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
                   <g.icon size={19} />
                 </div>
                 <h3 className="font-display font-semibold text-white">{g.title}</h3>
               </div>
-              <div className="mt-5 flex flex-wrap gap-2">
+              <StaggerGroup className="mt-5 flex flex-wrap gap-2" stagger={0.012} amount={0.1}>
                 {g.items.map((s) => (
-                  <span
+                  <StaggerItem
                     key={s}
+                    distance={8}
                     className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-300 transition-colors hover:border-violet-400/40 hover:text-white"
                   >
                     {s}
-                  </span>
+                  </StaggerItem>
                 ))}
-              </div>
-            </div>
-          </Reveal>
+              </StaggerGroup>
+            </SpotlightCard>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGroup>
 
       {/* Tool marquee */}
-      <div className="mt-12 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_15%,black_85%,transparent)]">
-        <div className="animate-marquee flex w-max gap-4">
+      <div
+        ref={marqueeRef}
+        className="mt-12 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_15%,black_85%,transparent)]"
+      >
+        <div
+          className={`marquee-track animate-marquee flex w-max gap-4 ${
+            marqueeVisible ? "" : "marquee-paused"
+          }`}
+        >
           {[...skills.tools, ...skills.tools].map((t, i) => (
             <span
               key={`${t}-${i}`}

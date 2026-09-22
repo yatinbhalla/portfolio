@@ -1,6 +1,11 @@
-import { Section, Reveal } from "./Section";
+import { useRef } from "react";
+import { motion } from "motion/react";
+import { Section } from "./Section";
 import { about } from "../data/profile";
 import { Store, Cpu, GraduationCap } from "lucide-react";
+import { StaggerGroup, StaggerItem } from "../motion/Stagger";
+import { SpotlightCard } from "../motion/SpotlightCard";
+import { useParallax } from "../motion/useParallax";
 
 const milestones = [
   {
@@ -24,33 +29,48 @@ const milestones = [
 ];
 
 export function About() {
+  const proseRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  // The two columns drift against each other by roughly 50px across the crossing.
+  const proseY = useParallax(proseRef, { speed: -18 });
+  const railY = useParallax(railRef, { speed: 34 });
+
   return (
     <Section id="about" kicker="About" title={about.heading}>
       <div className="grid gap-12 lg:grid-cols-5">
-        <div className="space-y-5 lg:col-span-3">
-          {about.paragraphs.map((p, i) => (
-            <Reveal key={i} delay={i * 0.1}>
-              <p className="leading-relaxed text-slate-400">{p}</p>
-            </Reveal>
-          ))}
+        <div ref={proseRef} className="lg:col-span-3">
+          <motion.div style={{ y: proseY }}>
+            <StaggerGroup stagger={0.09} className="space-y-5">
+              {about.paragraphs.map((p, i) => (
+                <StaggerItem key={i}>
+                  <p className="leading-relaxed text-slate-400">{p}</p>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </motion.div>
         </div>
-        <div className="space-y-4 lg:col-span-2">
-          {milestones.map((m, i) => (
-            <Reveal key={m.title} delay={0.15 + i * 0.1}>
-              <div className="panel card-hover flex gap-4 rounded-2xl p-5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
-                  <m.icon size={20} />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-violet-300">
-                    {m.period}
-                  </p>
-                  <h3 className="font-display mt-0.5 font-semibold text-white">{m.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-400">{m.text}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
+
+        <div ref={railRef} className="lg:col-span-2">
+          <motion.div style={{ y: railY }}>
+            <StaggerGroup stagger={0.1} className="space-y-4">
+              {milestones.map((m) => (
+                <StaggerItem key={m.title} direction="right" hoverLift={5}>
+                  <SpotlightCard className="panel card-hover flex gap-4 rounded-2xl p-5">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
+                      <m.icon size={20} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold tracking-wider text-violet-300 uppercase">
+                        {m.period}
+                      </p>
+                      <h3 className="font-display mt-0.5 font-semibold text-white">{m.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-slate-400">{m.text}</p>
+                    </div>
+                  </SpotlightCard>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </motion.div>
         </div>
       </div>
     </Section>
