@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { Download, Menu, X } from "lucide-react";
 import { profile } from "../data/profile";
 import { useMotionPrefs } from "../motion/context";
@@ -34,8 +34,6 @@ export function Nav() {
     setScrolled((prev) => (prev === next ? prev : next));
   });
 
-  // Chrome density is scroll-linked, so it never involves React at all.
-  const padY = useTransform(scrollY, [0, 120], [16, 10]);
 
   return (
     <motion.header
@@ -46,9 +44,12 @@ export function Nav() {
         scrolled || open ? "glass" : "bg-transparent"
       }`}
     >
-      <motion.nav
-        style={{ paddingTop: reduced ? 16 : padY, paddingBottom: reduced ? 16 : padY }}
-        className="mx-auto flex max-w-6xl items-center justify-between px-5 sm:px-8"
+      {/* Density flips on a class, not a per-frame motion value: padding is a
+          layout property and this boolean only changes twice per page. */}
+      <nav
+        className={`mx-auto flex max-w-6xl items-center justify-between px-5 transition-[padding] duration-300 sm:px-8 ${
+          scrolled ? "py-2.5" : "py-4"
+        }`}
       >
         <a
           href="#top"
@@ -100,7 +101,7 @@ export function Nav() {
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </motion.nav>
+      </nav>
 
       <AnimatePresence initial={false}>
         {open && (
