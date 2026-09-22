@@ -15,11 +15,14 @@ export function SpotlightCard({
   className = "",
   radius = 340,
   color = "rgba(139, 92, 246, 0.14)",
+  as: Tag = "div",
 }: {
   children: ReactNode;
   className?: string;
   radius?: number;
   color?: string;
+  /** Keeps semantics intact for self-contained cards. */
+  as?: "div" | "article";
 }) {
   const { fine, reduced } = useMotionPrefs();
   const ref = useRef<HTMLDivElement>(null);
@@ -31,11 +34,11 @@ export function SpotlightCard({
   const background = useMotionTemplate`radial-gradient(${radius}px circle at ${mx}px ${my}px, ${color}, transparent 70%)`;
 
   if (!fine || reduced) {
-    return <div className={className}>{children}</div>;
+    return <Tag className={className}>{children}</Tag>;
   }
 
   return (
-    <div
+    <Tag
       ref={ref}
       data-spotlight
       className={`spotlight-host relative ${className}`}
@@ -57,6 +60,6 @@ export function SpotlightCard({
         style={{ background, opacity }}
       />
       {children}
-    </div>
+    </Tag>
   );
 }

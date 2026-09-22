@@ -75,7 +75,7 @@ export function Projects() {
         >
           {filtered.map((r) => (
             <StaggerItem key={r.name} as="li" hoverLift={5} className="h-full">
-              <SpotlightCard className="panel card-hover flex h-full flex-col rounded-2xl p-5">
+              <SpotlightCard as="article" className="panel card-hover flex h-full flex-col rounded-2xl p-5">
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="font-display font-semibold break-all text-white">{r.name}</h3>
                   <div className="flex shrink-0 gap-1.5">
