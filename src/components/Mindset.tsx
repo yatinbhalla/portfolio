@@ -19,7 +19,7 @@ export function Mindset() {
       kicker="Traits & Mindset"
       title={
         <>
-          How I'm <span className="text-gradient">wired</span>
+          How I'm <span className="text-accent-deep">wired</span>
         </>
       }
     >
@@ -28,12 +28,12 @@ export function Mindset() {
           const Icon = icons[m.icon as keyof typeof icons];
           return (
             <StaggerItem key={m.title} as="li" hoverLift={6} className="h-full">
-              <SpotlightCard className="panel card-hover h-full rounded-2xl p-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
+              <SpotlightCard className="panel card-hover h-full p-6">
+                <div className="icon-chip h-12 w-12">
                   <Icon size={22} />
                 </div>
-                <h3 className="font-display mt-4 text-lg font-semibold text-white">{m.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">{m.text}</p>
+                <h3 className="mt-4 text-lg font-semibold text-ink">{m.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-500">{m.text}</p>
               </SpotlightCard>
             </StaggerItem>
           );

@@ -24,26 +24,26 @@ export function Skills() {
       kicker="Skills & Tools"
       title={
         <>
-          The <span className="text-gradient">toolkit</span>
+          The <span className="text-accent-deep">toolkit</span>
         </>
       }
     >
       <StaggerGroup className="grid gap-5 lg:grid-cols-3" stagger={0.1}>
         {groups.map((g) => (
           <StaggerItem key={g.title} hoverLift={6} className="h-full">
-            <SpotlightCard className="panel card-hover h-full rounded-2xl p-6">
+            <SpotlightCard className="panel card-hover h-full p-6">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
+                <div className="icon-chip h-10 w-10">
                   <g.icon size={19} />
                 </div>
-                <h3 className="font-display font-semibold text-white">{g.title}</h3>
+                <h3 className="font-semibold text-ink">{g.title}</h3>
               </div>
               <StaggerGroup className="mt-5 flex flex-wrap gap-2" stagger={0.012} amount={0.1}>
                 {g.items.map((s) => (
                   <StaggerItem
                     key={s}
                     distance={8}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-300 transition-colors hover:border-violet-400/40 hover:text-white"
+                    className="tag px-3 py-1.5 text-xs"
                   >
                     {s}
                   </StaggerItem>
@@ -67,7 +67,7 @@ export function Skills() {
           {[...skills.tools, ...skills.tools].map((t, i) => (
             <span
               key={`${t}-${i}`}
-              className="panel font-display rounded-full px-5 py-2 text-sm whitespace-nowrap text-slate-300"
+              className="panel font-mono px-5 py-2 text-xs whitespace-nowrap text-ink-500"
             >
               {t}
             </span>

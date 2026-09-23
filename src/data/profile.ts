@@ -7,6 +7,7 @@ export const profile = {
   github: "https://github.com/yatinbhalla",
   linkedin: "https://www.linkedin.com/in/yatinbhalla42/",
   x: "https://x.com/yatinbhalla42",
+  timezone: "IST · UTC+5:30",
   resumePath: "/Yatin_Bhalla_Resume.pdf",
   tagline:
     "Business operator turned product manager. I grew three family retail & e-commerce businesses ~30% YoY over seven years — and shipped 20+ AI products 0→1 along the way, four of them in daily production use.",
@@ -84,7 +85,7 @@ export const featured: FeaturedProject[] = [
     stack: ["Sarvam STT/TTS", "OpenAI Embeddings", "Pinecone RAG", "FastAPI", "PostgreSQL"],
     repo: "https://github.com/yatinbhalla/Voice-Matters",
     live: "https://voice-matters-web.onrender.com",
-    accent: "#8b5cf6",
+    accent: "#8F3B1E",
   },
   {
     name: "Marketplace Listing Agents",
@@ -95,7 +96,7 @@ export const featured: FeaturedProject[] = [
     stack: ["React", "Node.js", "Playwright", "Gemini AI"],
     repo: "https://github.com/yatinbhalla/Meesho-listing",
     moreRepos: ["https://github.com/yatinbhalla/Flipkart-listing"],
-    accent: "#22d3ee",
+    accent: "#2F4858",
   },
   {
     name: "NehaBillingApp",
@@ -105,7 +106,7 @@ export const featured: FeaturedProject[] = [
     metrics: ["83% billing time cut", "2 min → 20 s per invoice", "In daily production use"],
     stack: ["React", "Tailwind", "localStorage"],
     repo: "https://github.com/yatinbhalla/NehaBillingApp",
-    accent: "#34d399",
+    accent: "#3F5F4A",
   },
   {
     name: "PM-Trainer",
@@ -116,7 +117,7 @@ export const featured: FeaturedProject[] = [
     stack: ["Gemini", "React 19", "TypeScript", "Zustand"],
     repo: "https://github.com/yatinbhalla/PM-trainer",
     live: "https://ai.studio/apps/d274e719-0306-47d6-8019-22ca22b871f8?fullscreenApplet=true",
-    accent: "#f472b6",
+    accent: "#6E3350",
   },
   {
     name: "Neha Chappal Creative Suite",
@@ -127,7 +128,7 @@ export const featured: FeaturedProject[] = [
     stack: ["Gemini 2.5 Flash", "React 19", "TypeScript", "Vite"],
     repo: "https://github.com/yatinbhalla/Neha-Chappal-Creative-Suite",
     live: "https://ai.studio/apps/drive/1iHn72r9TKpf17lKYDY0Qef_sLjuuaUEX?fullscreenApplet=true",
-    accent: "#fbbf24",
+    accent: "#7A5C1F",
   },
   {
     name: "AI Study Quiz Generator",
@@ -138,7 +139,7 @@ export const featured: FeaturedProject[] = [
     stack: ["Gemini", "Firebase", "React 19", "TypeScript"],
     repo: "https://github.com/yatinbhalla/AI-Study-Quiz-Generator",
     live: "https://ai.studio/apps/38a01b9b-7c69-4750-b094-43905fc86cd6?fullscreenApplet=true",
-    accent: "#60a5fa",
+    accent: "#4B4A7A",
   },
 ];
 

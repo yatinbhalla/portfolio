@@ -13,8 +13,8 @@ import { useMotionPrefs } from "./context";
 export function SpotlightCard({
   children,
   className = "",
-  radius = 340,
-  color = "rgba(139, 92, 246, 0.14)",
+  radius = 420,
+  color = "rgba(196, 58, 16, 0.15)",
   as: Tag = "div",
 }: {
   children: ReactNode;
@@ -56,7 +56,7 @@ export function SpotlightCard({
     >
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
         style={{ background, opacity }}
       />
       {children}

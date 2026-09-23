@@ -9,7 +9,7 @@ import { slideItem } from "../motion/variants";
  * the heading rides up out of a mask.
  *
  * The heading is masked as a single block rather than split per word, because
- * `title` is a ReactNode containing a .text-gradient span — splitting arbitrary
+ * `title` is a ReactNode containing a .text-accent-deep span — splitting arbitrary
  * nodes would break its background-clip.
  */
 export function SectionHeader({
@@ -35,7 +35,7 @@ export function SectionHeader({
     >
       <motion.p
         variants={slideItem("up", reduced ? 0 : 12)}
-        className="font-display text-sm font-semibold tracking-[0.25em] text-cyan-glow uppercase"
+        className="font-mono text-[11px] font-medium tracking-[0.2em] text-ink-500 uppercase"
       >
         {kicker}
       </motion.p>
@@ -47,12 +47,12 @@ export function SectionHeader({
           show: { scaleX: 1, transition: { duration: DUR.lg, ease: EASE_OUT } },
         }}
         style={{ transformOrigin: align === "center" ? "50% 50%" : "0% 50%" }}
-        className={`mt-4 h-px w-24 bg-gradient-to-r from-violet-400 to-cyan-400 ${
+        className={`mt-5 h-0.5 w-14 bg-accent ${
           align === "center" ? "mx-auto" : ""
         }`}
       />
 
-      <h2 className="font-display mt-5 overflow-hidden pb-[0.12em] text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+      <h2 className="font-display mt-6 overflow-hidden pb-[0.12em] text-[clamp(2rem,4.2vw,3.25rem)] leading-[1.02] font-normal tracking-[-0.03em] text-ink">
         <motion.span
           variants={{
             hidden: { y: reduced ? 0 : "110%", opacity: reduced ? 0 : 1 },

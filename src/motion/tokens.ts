@@ -28,8 +28,8 @@ export const SCENE = {
   featuredDwellVh: 10,
   /** Sticky top offset increment per stacked card, in px. */
   featuredOffsetPx: 14,
-  featuredMinScale: 0.94,
-  featuredMinOpacity: 0.45,
+  featuredMinScale: 0.92,
+  featuredMinOpacity: 0.78,
 } as const;
 
 /** Pinned scenes are desktop-only: thumb-scrolling pinned content is where this design fails. */

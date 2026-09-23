@@ -49,7 +49,7 @@ export function Contact() {
   const { reduced } = useMotionPrefs();
   const ref = useRef<HTMLElement>(null);
 
-  // The orb blooms as the panel arrives rather than simply fading in.
+  // The accent rule draws itself across the panel as it arrives.
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "center center"],
@@ -63,12 +63,12 @@ export function Contact() {
         initial={{ opacity: 0, y: reduced ? 0 : 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        className="panel relative overflow-hidden rounded-3xl p-10 text-center sm:p-16"
+        className="panel relative overflow-hidden p-10 text-center sm:p-16"
       >
         <motion.div
           aria-hidden
-          style={{ scale: orbScale, opacity: orbOpacity }}
-          className="absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-violet-600 blur-[100px]"
+          style={{ scaleX: orbScale, opacity: orbOpacity, transformOrigin: "0% 50%" }}
+          className="absolute inset-x-0 top-0 h-0.5 bg-accent"
         />
         <div className="relative">
           <SectionHeader
@@ -76,12 +76,12 @@ export function Contact() {
             align="center"
             title={
               <>
-                Let's build something <span className="text-gradient">users love</span>
+                Let's build something <span className="text-accent-deep">users love</span>
               </>
             }
           />
 
-          <p className="mx-auto mt-4 max-w-xl text-slate-400">
+          <p className="mx-auto mt-4 max-w-xl text-ink-500">
             Open to AI Product Manager roles. If you want a PM who has run real businesses,
             shipped real AI products, and measures everything — let's talk.
           </p>
@@ -97,10 +97,10 @@ export function Contact() {
                   {...(c.external ? { target: "_blank", rel: "noreferrer" } : {})}
                   className="block h-full"
                 >
-                  <SpotlightCard className="panel card-hover flex h-full flex-col items-center gap-2 rounded-2xl p-5">
-                    <c.icon size={22} className="text-cyan-300" />
-                    <span className="font-display text-sm font-semibold text-white">{c.label}</span>
-                    <span className="text-xs break-all text-slate-400">{c.value}</span>
+                  <SpotlightCard className="panel card-hover flex h-full flex-col items-center gap-2 p-5">
+                    <c.icon size={22} className="text-ink-500" />
+                    <span className="text-sm font-semibold text-ink">{c.label}</span>
+                    <span className="text-xs break-all text-ink-500">{c.value}</span>
                   </SpotlightCard>
                 </a>
               </StaggerItem>
@@ -110,7 +110,7 @@ export function Contact() {
           <MagneticButton
             href={profile.resumePath}
             download
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-cyan-500 px-8 py-3.5 font-semibold text-white"
+            className="btn-primary mt-12 px-8 py-4"
           >
             <Download size={18} /> Download Resume (PDF)
           </MagneticButton>

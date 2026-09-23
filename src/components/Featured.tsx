@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Section } from "./Section";
 import { featured, type FeaturedProject } from "../data/profile";
 import { ExternalLink, Github, TrendingUp } from "lucide-react";
@@ -25,7 +25,7 @@ function CardBody({ p }: { p: FeaturedProject }) {
     <>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="font-display text-xl font-bold text-white sm:text-2xl">{p.name}</h3>
+          <h3 className="text-xl font-bold text-ink sm:text-2xl">{p.name}</h3>
           <p className="mt-1 text-sm font-medium" style={{ color: p.accent }}>
             {p.headline}
           </p>
@@ -40,7 +40,7 @@ function CardBody({ p }: { p: FeaturedProject }) {
               aria-label={`${url.split("/").pop()} repository`}
               title={url.split("/").pop()}
               whileHover={{ y: -3, scale: 1.08 }}
-              className="panel rounded-full p-2.5 text-slate-300 transition-colors hover:text-white"
+              className="panel p-2.5 text-ink-500 transition-colors hover:text-accent-deep"
             >
               <Github size={17} />
             </motion.a>
@@ -52,7 +52,7 @@ function CardBody({ p }: { p: FeaturedProject }) {
               rel="noreferrer"
               aria-label={`${p.name} live demo`}
               whileHover={{ y: -3, scale: 1.08 }}
-              className="panel rounded-full p-2.5 text-slate-300 transition-colors hover:text-white"
+              className="panel p-2.5 text-ink-500 transition-colors hover:text-accent-deep"
             >
               <ExternalLink size={17} />
             </motion.a>
@@ -60,11 +60,11 @@ function CardBody({ p }: { p: FeaturedProject }) {
         </div>
       </div>
 
-      <p className="mt-4 text-sm leading-relaxed text-slate-400">{p.description}</p>
+      <p className="mt-4 text-sm leading-relaxed text-ink-500">{p.description}</p>
 
       <ul className="mt-5 space-y-2">
         {p.metrics.map((m) => (
-          <li key={m} className="flex items-center gap-2 text-sm text-slate-200">
+          <li key={m} className="flex items-center gap-2 text-sm text-ink-700">
             <TrendingUp size={14} style={{ color: p.accent }} />
             {m}
           </li>
@@ -75,7 +75,7 @@ function CardBody({ p }: { p: FeaturedProject }) {
         {p.stack.map((t) => (
           <span
             key={t}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300"
+            className="tag px-3 py-1 text-xs"
           >
             {t}
           </span>
@@ -114,12 +114,12 @@ function StackCard({ p, index, total }: { p: FeaturedProject; index: number; tot
     >
       <motion.article
         style={{ scale, opacity, transformOrigin: "50% 0%", willChange: "transform" }}
-        className="relative overflow-hidden rounded-3xl"
+        className="relative overflow-hidden "
       >
-        <SpotlightCard className="panel-solid card-hover rounded-3xl p-7 sm:p-8">
+        <SpotlightCard className="panel-solid card-hover p-7 sm:p-8">
           <div
             aria-hidden
-            className="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full opacity-20 blur-3xl"
+            className="pointer-events-none absolute inset-x-0 top-0 h-1"
             style={{ background: p.accent }}
           />
           <div className="relative">
@@ -131,46 +131,8 @@ function StackCard({ p, index, total }: { p: FeaturedProject; index: number; tot
   );
 }
 
-/**
- * One ambient orb per project, cross-faded by opacity.
- *
- * Six static blurred layers rather than one layer whose colour is interpolated:
- * changing a colour under a 130px blur repaints a large surface every frame,
- * while opacity on a pre-blurred layer is compositor-only.
- */
-function AccentOrb({
-  accent,
-  index,
-  total,
-  progress,
-}: {
-  accent: string;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  // Clamped into [0, 1] and kept strictly increasing: this range is handed to
-  // WAAPI as keyframe offsets by Motion's scroll-driven optimisation.
-  const lo = Math.max(0, (index - 0.7) / total);
-  const mid = Math.max(lo + 0.0001, index / total);
-  const hi = Math.min(1, Math.max(mid + 0.0001, (index + 0.7) / total));
-  const opacity = useTransform(progress, [lo, mid, hi], [0, 0.22, 0]);
-  return (
-    <motion.div
-      aria-hidden
-      style={{ opacity, background: accent }}
-      className="absolute top-[18vh] left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full blur-[130px]"
-    />
-  );
-}
-
 export function Featured() {
   const { canPin } = useMotionPrefs();
-  const listRef = useRef<HTMLUListElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: listRef,
-    offset: ["start start", "end end"],
-  });
 
   return (
     <Section
@@ -178,25 +140,12 @@ export function Featured() {
       kicker="Featured Work"
       title={
         <>
-          Products with <span className="text-gradient">receipts</span>
+          Products with <span className="text-accent-deep">receipts</span>
         </>
       }
     >
       {canPin ? (
-        <ul ref={listRef} data-stack className="relative">
-          {/* Sticky and zero-height: follows the scene without adding layout height. */}
-          <li aria-hidden className="pointer-events-none sticky top-0 -z-10 h-0">
-            {featured.map((p, i) => (
-              <AccentOrb
-                key={p.name}
-                accent={p.accent}
-                index={i}
-                total={featured.length}
-                progress={scrollYProgress}
-              />
-            ))}
-          </li>
-
+        <ul data-stack className="relative">
           {featured.map((p, i) => (
             <StackCard key={p.name} p={p} index={i} total={featured.length} />
           ))}
@@ -208,10 +157,10 @@ export function Featured() {
         <StaggerGroup as="ul" className="grid gap-6 lg:grid-cols-2" stagger={0.08}>
           {featured.map((p) => (
             <StaggerItem key={p.name} as="li" hoverLift={6} className="h-full">
-              <article className="panel card-hover relative h-full overflow-hidden rounded-3xl p-7">
+              <article className="panel card-hover relative h-full overflow-hidden p-7">
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute -top-20 -right-20 h-48 w-48 rounded-full opacity-15 blur-3xl"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-1"
                   style={{ background: p.accent }}
                 />
                 <div className="relative">
