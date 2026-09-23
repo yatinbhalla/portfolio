@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { Section } from "./Section";
 import { useGithubRepos } from "../hooks/useGithubRepos";
@@ -6,6 +6,7 @@ import { profile } from "../data/profile";
 import { ArrowUpRight, ChevronDown, ExternalLink, Github, Search } from "lucide-react";
 import { StaggerGroup, StaggerItem } from "../motion/Stagger";
 import { SpotlightCard } from "../motion/SpotlightCard";
+import { useLenisInstance } from "../motion/context";
 
 const langColors: Record<string, string> = {
   TypeScript: "#3178c6",
@@ -25,7 +26,32 @@ export function Projects() {
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
+  const returnToControls = useRef(false);
+  const lenis = useLenisInstance();
   const [floor, setFloor] = useState<number>();
+
+  /*
+   * Collapsing removes ~19 cards from ABOVE the control, so the reader is left
+   * stranded far below the section looking at whatever followed it. Bring the
+   * control back under them instead.
+   */
+  useEffect(() => {
+    if (showAll || !returnToControls.current) return;
+    returnToControls.current = false;
+    const el = controlsRef.current;
+    if (!el) return;
+    const offset = -(window.innerHeight / 2 - 80);
+    if (lenis) lenis.scrollTo(el, { offset });
+    else el.scrollIntoView({ block: "center" });
+  }, [showAll, lenis]);
+
+  const toggleShowAll = () => {
+    setShowAll((wasShowingAll) => {
+      if (wasShowingAll) returnToControls.current = true;
+      return !wasShowingAll;
+    });
+  };
 
   // The live GitHub swap changes this grid's height mid-session. Pinning a floor
   // means the page can only grow, never shrink out from under the reader.
@@ -157,12 +183,11 @@ export function Projects() {
       {/* Expands in place rather than sending the visitor away mid-page; the
           GitHub link stays available for anyone who wants the source of truth. */}
       {!isSearching && filtered.length > PREVIEW_COUNT && (
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-t border-rule pt-8">
-          <button
-            type="button"
-            onClick={() => setShowAll((v) => !v)}
-            className="btn-primary px-7 py-4"
-          >
+        <div
+          ref={controlsRef}
+          className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-t border-rule pt-8"
+        >
+          <button type="button" onClick={toggleShowAll} className="btn-primary px-7 py-4">
             {collapsed ? `Show all ${filtered.length} projects` : "Show fewer"}
             <ChevronDown
               size={15}

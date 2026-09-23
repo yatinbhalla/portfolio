@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { motion } from "motion/react";
 import { useMotionPrefs } from "./context";
 import { slideItem, staggerParent } from "./variants";
@@ -30,12 +30,24 @@ export function StaggerGroup({
 }) {
   const { reduced } = useMotionPrefs();
   const Tag = groupTags[as];
+  const [seen, setSeen] = useState(false);
+  /*
+   * A latched `animate`, deliberately NOT `whileInView`.
+   *
+   * whileInView is a gesture: it animates the children that exist at the moment
+   * it fires and leaves no standing state behind. Any child mounted afterwards —
+   * a "show all" expansion, a changed search result — inherits initial="hidden"
+   * with no gesture to pick up, so it stays invisible while still occupying
+   * layout. `animate` is a standing variant, so late-mounting children resolve
+   * to "show" like everyone else.
+   */
   return (
     <Tag
       className={className}
       initial="hidden"
-      whileInView="show"
+      animate={seen ? "show" : "hidden"}
       viewport={{ once, amount }}
+      onViewportEnter={() => setSeen(true)}
       variants={staggerParent(reduced ? 0 : stagger, reduced ? 0 : delayChildren)}
     >
       {children}
