@@ -46,7 +46,7 @@ export function IntroLoader() {
           {["Y", "B"].map((ch, i) => (
             <span key={ch} className="overflow-hidden pb-[0.12em]">
               <motion.span
-                className="font-display text-gradient block text-7xl font-bold sm:text-8xl"
+                className="font-mono block text-6xl font-medium tracking-[-0.04em] text-paper sm:text-7xl"
                 initial={{ y: "110%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.55, delay: i * 0.07, ease: EASE_OUT }}
@@ -57,13 +57,14 @@ export function IntroLoader() {
           ))}
         </div>
         <motion.div
-          className="h-px w-32 bg-gradient-to-r from-violet-500 to-cyan-500"
+          className="h-0.5 w-32 bg-accent"
           style={{ transformOrigin: "0% 50%" }}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.6, delay: 0.14, ease: EASE_OUT }}
         />
       </div>
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-0.5 bg-accent" />
     </motion.div>
   );
 }

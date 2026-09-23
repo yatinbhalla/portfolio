@@ -19,7 +19,7 @@ type Step = (typeof howIThink)[number];
 
 const heading = (
   <>
-    Idea → <span className="text-gradient">shipped &amp; measured</span>
+    Idea → <span className="text-accent-deep">shipped &amp; measured</span>
   </>
 );
 
@@ -64,20 +64,20 @@ function ProcessStep({
       <div className="flex items-center gap-3">
         <span
           aria-hidden
-          className="font-display panel flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold text-cyan-300"
+          className="panel flex h-10 w-10 items-center justify-center font-mono text-xs font-medium text-ink-500"
         >
           {s.step}
         </span>
-        <h3 className="font-display text-xl font-semibold text-white sm:text-2xl">{s.title}</h3>
+        <h3 className="text-xl font-semibold text-ink sm:text-2xl">{s.title}</h3>
       </div>
-      <p className="mt-4 leading-relaxed text-slate-400">{s.text}</p>
+      <p className="mt-4 leading-relaxed text-ink-500">{s.text}</p>
     </>
   );
 
   if (!enabled) {
     return (
       <StaggerItem as="li" hoverLift={6} className="h-full">
-        <div data-step className="panel card-hover h-full rounded-2xl p-6">
+        <div data-step className="panel card-hover h-full p-6">
           {body}
         </div>
       </StaggerItem>
@@ -90,7 +90,7 @@ function ProcessStep({
       style={{ opacity, y }}
       className="absolute inset-x-0 top-1/2 -translate-y-1/2"
     >
-      <div className="panel-solid rounded-3xl p-7 sm:p-9">{body}</div>
+      <div className="panel-solid p-7 sm:p-9">{body}</div>
     </motion.li>
   );
 }
@@ -105,10 +105,10 @@ function PinnedScene({ progress, active }: { progress: MotionValue<number>; acti
 
         <div className="mt-10 flex items-center gap-5">
           {/* Rail fills as the scene advances. */}
-          <div className="relative h-40 w-px bg-white/10" aria-hidden>
+          <div className="relative h-40 w-px bg-rule" aria-hidden>
             <motion.div
               style={{ scaleY: railScale, transformOrigin: "50% 0%" }}
-              className="absolute inset-0 w-px bg-gradient-to-b from-violet-400 to-cyan-400"
+              className="absolute inset-0 w-px bg-accent-deep"
             />
           </div>
 
@@ -118,11 +118,11 @@ function PinnedScene({ progress, active }: { progress: MotionValue<number>; acti
                 <motion.span
                   animate={{ scale: i === active ? 1.35 : 1, opacity: i === active ? 1 : 0.35 }}
                   transition={{ duration: 0.3, ease: EASE_OUT }}
-                  className="block h-1.5 w-1.5 rounded-full bg-cyan-300"
+                  className="block h-1.5 w-1.5 bg-accent"
                 />
                 <span
-                  className={`font-display text-xs tracking-widest transition-colors ${
-                    i === active ? "text-white" : "text-slate-600"
+                  className={`text-xs tracking-widest transition-colors ${
+                    i === active ? "text-ink" : "text-ink-500"
                   }`}
                 >
                   {s.step}
@@ -133,7 +133,7 @@ function PinnedScene({ progress, active }: { progress: MotionValue<number>; acti
 
           <div
             aria-hidden
-            className="font-display text-gradient ml-2 overflow-hidden text-7xl leading-none font-bold"
+            className="text-accent-deep ml-2 overflow-hidden font-mono text-7xl leading-none font-medium tracking-[-0.04em]"
           >
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.span

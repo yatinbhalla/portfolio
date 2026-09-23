@@ -13,9 +13,9 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 py-10">
+    <footer className="border-t border-rule py-10">
       <Reveal className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 sm:flex-row sm:px-8">
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-ink-500">
           &copy; {new Date().getFullYear()} {profile.name} &middot; {profile.location}
         </p>
         <div className="flex items-center gap-4">
@@ -27,7 +27,7 @@ export function Footer() {
               aria-label={label}
               whileHover={{ y: -3, scale: 1.12 }}
               whileTap={{ scale: 0.95 }}
-              className="text-slate-500 transition-colors hover:text-white"
+              className="text-ink-500 transition-colors hover:text-accent-deep"
             >
               <Icon size={18} />
             </motion.a>

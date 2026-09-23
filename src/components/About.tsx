@@ -43,7 +43,7 @@ export function About() {
             <StaggerGroup stagger={0.09} className="space-y-5">
               {about.paragraphs.map((p, i) => (
                 <StaggerItem key={i}>
-                  <p className="leading-relaxed text-slate-400">{p}</p>
+                  <p className="leading-relaxed text-ink-500">{p}</p>
                 </StaggerItem>
               ))}
             </StaggerGroup>
@@ -55,16 +55,16 @@ export function About() {
             <StaggerGroup stagger={0.1} className="space-y-4">
               {milestones.map((m) => (
                 <StaggerItem key={m.title} direction="right" hoverLift={5}>
-                  <SpotlightCard className="panel card-hover flex gap-4 rounded-2xl p-5">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/25 to-cyan-500/25 text-cyan-300">
+                  <SpotlightCard className="panel card-hover flex gap-4 p-5">
+                    <div className="icon-chip h-11 w-11 shrink-0">
                       <m.icon size={20} />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold tracking-wider text-violet-300 uppercase">
+                      <p className="text-xs font-semibold tracking-wider text-ink-500 uppercase">
                         {m.period}
                       </p>
-                      <h3 className="font-display mt-0.5 font-semibold text-white">{m.title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-slate-400">{m.text}</p>
+                      <h3 className="mt-0.5 font-semibold text-ink">{m.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-ink-500">{m.text}</p>
                     </div>
                   </SpotlightCard>
                 </StaggerItem>

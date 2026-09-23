@@ -42,22 +42,22 @@ export function Projects() {
       kicker="All Projects"
       title={
         <>
-          The full <span className="text-gradient">build log</span>
+          The full <span className="text-accent-deep">build log</span>
         </>
       }
     >
       <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-ink-500">
           {live ? "Fetched live from GitHub" : "Snapshot from GitHub"} ·{" "}
           {filtered.length} public repositories
         </p>
-        <label className="panel flex w-full items-center gap-2 rounded-full px-4 py-2.5 transition-shadow focus-within:shadow-[0_0_0_1px_rgba(139,92,246,0.5),0_0_30px_rgba(139,92,246,0.18)] sm:w-72">
-          <Search size={16} className="shrink-0 text-slate-500" />
+        <label className="panel flex w-full items-center gap-2 px-4 py-2.5 transition-colors focus-within:border-accent-deep sm:w-72">
+          <Search size={16} className="shrink-0 text-ink-500" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by name, topic, tech…"
-            className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
+            className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-500"
           />
         </label>
       </div>
@@ -75,9 +75,9 @@ export function Projects() {
         >
           {filtered.map((r) => (
             <StaggerItem key={r.name} as="li" hoverLift={5} className="h-full">
-              <SpotlightCard as="article" className="panel card-hover flex h-full flex-col rounded-2xl p-5">
+              <SpotlightCard as="article" className="panel card-hover flex h-full flex-col p-5">
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-display font-semibold break-all text-white">{r.name}</h3>
+                  <h3 className="font-semibold break-all text-ink">{r.name}</h3>
                   <div className="flex shrink-0 gap-1.5">
                     <motion.a
                       href={r.html_url}
@@ -85,7 +85,7 @@ export function Projects() {
                       rel="noreferrer"
                       aria-label={`${r.name} repository`}
                       whileHover={{ y: -2, scale: 1.12 }}
-                      className="rounded-full p-1.5 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
+                      className="p-1.5 text-ink-500 transition-colors hover:text-accent-deep"
                     >
                       <Github size={16} />
                     </motion.a>
@@ -96,22 +96,22 @@ export function Projects() {
                         rel="noreferrer"
                         aria-label={`${r.name} live link`}
                         whileHover={{ y: -2, scale: 1.12 }}
-                        className="rounded-full p-1.5 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
+                        className="p-1.5 text-ink-500 transition-colors hover:text-accent-deep"
                       >
                         <ExternalLink size={16} />
                       </motion.a>
                     )}
                   </div>
                 </div>
-                <p className="mt-2 line-clamp-4 flex-1 text-sm leading-relaxed text-slate-400">
+                <p className="mt-2 line-clamp-4 flex-1 text-sm leading-relaxed text-ink-500">
                   {r.description ?? "No description yet."}
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   {r.language && (
-                    <span className="flex items-center gap-1.5 text-xs text-slate-300">
+                    <span className="flex items-center gap-1.5 text-xs text-ink-500">
                       <span
-                        className="h-2.5 w-2.5 rounded-full"
-                        style={{ background: langColors[r.language] ?? "#8b5cf6" }}
+                        className="h-2.5 w-2.5 rounded-full ring-1 ring-ink/15"
+                        style={{ background: langColors[r.language] ?? "var(--color-ink-400)" }}
                       />
                       {r.language}
                     </span>
@@ -119,7 +119,7 @@ export function Projects() {
                   {r.topics.slice(0, 3).map((t) => (
                     <span
                       key={t}
-                      className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs text-slate-400"
+                      className="tag px-2.5 py-0.5 text-xs"
                     >
                       {t}
                     </span>
@@ -132,7 +132,7 @@ export function Projects() {
       </div>
 
       {filtered.length === 0 && (
-        <p className="py-12 text-center text-slate-500">No projects match "{query}".</p>
+        <p className="py-12 text-center text-ink-500">No projects match "{query}".</p>
       )}
     </Section>
   );

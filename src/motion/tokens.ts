@@ -29,7 +29,7 @@ export const SCENE = {
   /** Sticky top offset increment per stacked card, in px. */
   featuredOffsetPx: 14,
   featuredMinScale: 0.94,
-  featuredMinOpacity: 0.45,
+  featuredMinOpacity: 0.7,
 } as const;
 
 /** Pinned scenes are desktop-only: thumb-scrolling pinned content is where this design fails. */

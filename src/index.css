@@ -1,30 +1,61 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Space Grotesk", sans-serif;
-  --font-body: "Inter", sans-serif;
+  /* Display is Instrument Serif at weight 400 ONLY. Never pair font-display with a
+     weight class: the browser would synthesise a bold, which on a high-contrast
+     serif looks broken. It is reserved for the hero h1, section h2 and the mark. */
+  --font-display: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --color-ink: #05060f;
-  --color-panel: #0a0c18;
-  --color-violet-glow: #8b5cf6;
-  --color-cyan-glow: #22d3ee;
+  /* Ground */
+  --color-paper: #f4f1ea;
+  --color-surface: #eeeae1;
+  --color-surface-raised: #fbfaf7;
+
+  /* Warm ink ramp. ink-500 is the FLOOR for anything that is text. */
+  --color-ink: #14120e;
+  --color-ink-700: #3a362e;
+  --color-ink-500: #6b6459;
+  --color-ink-400: #8a8172;
+  --color-ink-300: #a9a192;
+
+  --color-rule: #d5cec0;
+  --color-rule-strong: #b5ac9a;
+
+  /* One signal. accent is 2.98:1 on paper, so it is FILLS, MARKS and RULES only.
+     Accent that must be text is always accent-deep (4.70:1). */
+  --color-accent: #ff4a1c;
+  --color-accent-deep: #c43a10;
+  --color-accent-dark: #a62f0c;
+  --color-accent-wash: #fbe7df;
+
+  /* Elevation is offset and warm, never a centred glow. */
+  --shadow-card: 0 1px 1px rgba(20, 18, 14, 0.035), 0 10px 24px -14px rgba(20, 18, 14, 0.16);
+  --shadow-card-hover: 0 1px 2px rgba(20, 18, 14, 0.05), 0 18px 40px -18px rgba(20, 18, 14, 0.22);
+  --shadow-stack: 0 2px 2px rgba(20, 18, 14, 0.04), 0 24px 48px -28px rgba(20, 18, 14, 0.28);
 
   --animate-marquee: marquee 32s linear infinite;
-  --animate-float: float 8s ease-in-out infinite;
 
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-24px) scale(1.04); }
-  }
+
+  /* Remove the cool ramps entirely. A leftover slate next to bone is the single
+     loudest "default light theme" tell, and deleting the namespace turns a silent
+     near-invisible failure into an obvious inherited-ink one. */
+  --color-slate-*: initial;
+  --color-violet-*: initial;
+  --color-cyan-*: initial;
+  --color-emerald-*: initial;
 }
 
 :root {
   /* Keep in sync with NAV_H in src/motion/tokens.ts */
   --nav-h: 68px;
+  /* Without this, visitors whose OS is dark get UA-inverted controls on bone. */
+  color-scheme: light;
 }
 
 /*
@@ -34,14 +65,15 @@
  * container, so the sticky scenes resolve against the viewport as intended.
  */
 html {
-  background: var(--color-ink);
+  background: var(--color-paper);
   overflow-x: clip;
+  scrollbar-color: var(--color-rule-strong) var(--color-paper);
 }
 
 body {
-  font-family: var(--font-body);
-  background: var(--color-ink);
-  color: #e2e8f0;
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink-700);
   overflow-x: clip;
 }
 
@@ -56,65 +88,150 @@ html.is-locked body {
 }
 
 ::selection {
-  background: rgba(139, 92, 246, 0.4);
+  background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  color: var(--color-ink);
 }
 
-.font-display {
-  font-family: var(--font-display);
-}
-
-/* Gradient text used for headings and accents */
-.text-gradient {
-  background: linear-gradient(100deg, #a78bfa, #22d3ee 60%, #67e8f9);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Projects' search input carries outline-none; without this the reskin would ship
+   a WCAG 2.4.7 failure, since its only focus cue was the violet ring being removed. */
+:focus-visible {
+  outline: 2px solid var(--color-accent-deep);
+  outline-offset: 3px;
 }
 
 /*
  * Surface system.
  *
- * .glass keeps backdrop-filter and is reserved for the two elements that genuinely
- * overlay scrolling content: the nav and the hero badge. Everything else uses
- * .panel, which is visually identical over this flat dark background but costs no
- * backdrop readback during scroll — the single biggest frame-budget win on the page.
+ * .glass is nav-only: it is the one element that genuinely overlays scrolling
+ * content. Everything else is .panel, which costs no backdrop readback per frame.
  */
 .glass {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--color-paper) 82%, transparent);
+  border-bottom: 1px solid var(--color-rule);
+  backdrop-filter: blur(14px) saturate(1.08);
 }
 
 .panel {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-rule);
+  box-shadow: var(--shadow-card);
 }
 
-/* Opaque: required wherever cards overlap (the Featured stack) or they read as mush. */
+/* Opaque, and it must stay that way: the Featured cards overlap, and translucent
+   surfaces read as mush the moment they stack. On bone these are sheets of paper. */
 .panel-solid {
-  background: #0b0d1a;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-rule);
+  box-shadow: var(--shadow-stack);
 }
 
 /*
- * Hover chrome only. The lift lives in Motion's whileHover, never here — a CSS
- * transform silently loses to Motion's inline style on promoted elements.
+ * Elevation, not haze. The lift itself lives in Motion's whileHover, never here —
+ * a CSS transform silently loses to Motion's inline style on promoted elements.
  */
 .card-hover {
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .card-hover:hover {
-  border-color: rgba(139, 92, 246, 0.45);
-  box-shadow: 0 0 40px rgba(139, 92, 246, 0.15);
+  border-color: var(--color-rule-strong);
+  box-shadow: var(--shadow-card-hover);
 }
 
-/* Background grid */
-.bg-grid {
-  background-image:
-    linear-gradient(rgba(139, 92, 246, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 40%, transparent 100%);
+/* Collapses four byte-identical 88-character strings. */
+.icon-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule);
+  color: var(--color-ink);
+}
+
+.tag {
+  border: 1px solid var(--color-rule);
+  background: var(--color-surface);
+  color: var(--color-ink-500);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.tag:hover {
+  border-color: var(--color-accent);
+  color: var(--color-ink);
+}
+
+/* Ink block with paper text (16.6:1). Paper on an accent fill would be 2.98:1. */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-ink);
+  border: 1px solid var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.btn-primary:hover {
+  background: var(--color-accent-deep);
+  border-color: var(--color-accent-deep);
+}
+
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 40%, transparent);
+  padding-bottom: 0.25rem;
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.btn-quiet:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-deep);
+}
+
+/* A typographic baseline grid, not a graph-paper mesh. First thing to cut if the
+   page starts reading busy — it costs only two otherwise-unused MotionValues. */
+.bg-baseline {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--color-rule) 0 1px,
+    transparent 1px 96px
+  );
+  mask-image: radial-gradient(ellipse 80% 65% at 50% 32%, black 30%, transparent 100%);
+  opacity: 0.5;
+}
+
+/*
+ * Film grain.
+ *
+ * The darkening is baked into the tile's ALPHA via feColorMatrix so this can
+ * composite with plain source-over. mix-blend-mode: multiply would dull the whole
+ * page (a raw turbulence tile averages ~50% grey) and would force the entire
+ * stacking context beneath it to flatten every frame — expensive alongside Lenis,
+ * two pinned scenes and the spotlight.
+ *
+ * A pseudo-element rather than a DOM node, so no future refactor can accidentally
+ * wrap it in a transformed ancestor. z-60 sits above the nav (z-50) so the whole
+ * frame is grained, and below the intro loader (z-100) so the wipe stays clean.
+ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.078  0 0 0 0 0.070  0 0 0 0 0.055  0 0 0 -1.15 0.62'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  background-repeat: repeat;
+  opacity: 0.5;
 }
 
 /* Marquee is paused whenever it is offscreen. */
@@ -146,10 +263,13 @@ html.lenis body {
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: #05060f; }
-::-webkit-scrollbar-thumb { background: #1e1b36; border-radius: 5px; }
-::-webkit-scrollbar-thumb:hover { background: #312a56; }
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--color-paper); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-rule-strong);
+  border: 4px solid var(--color-paper);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-ink-400); }
 
 /*
  * Reduced motion. MotionConfig reducedMotion="user" only neuters animate/whileInView
@@ -166,7 +286,6 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 
-  .animate-float,
   .animate-marquee,
   .animate-ping {
     animation: none !important;

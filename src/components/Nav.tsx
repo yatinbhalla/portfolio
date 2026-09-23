@@ -54,9 +54,9 @@ export function Nav() {
         <a
           href="#top"
           onClick={(e) => onAnchorClick(e, "#top")}
-          className="font-display text-lg font-bold text-white"
+          className="text-lg font-bold text-ink"
         >
-          Yatin<span className="text-gradient"> Bhalla</span>
+          Yatin<span className="text-accent-deep"> Bhalla</span>
         </a>
 
         <div className="hidden items-center gap-6 lg:flex">
@@ -68,14 +68,14 @@ export function Nav() {
                 href={l.href}
                 onClick={(e) => onAnchorClick(e, l.href)}
                 className={`relative py-1 text-sm transition-colors ${
-                  isActive ? "text-white" : "text-slate-300 hover:text-white"
+                  isActive ? "text-ink" : "text-ink-500 hover:text-accent-deep"
                 }`}
               >
                 {l.label}
                 {isActive && (
                   <motion.span
                     layoutId="nav-active"
-                    className="absolute -bottom-0.5 left-0 h-px w-full bg-gradient-to-r from-violet-400 to-cyan-400"
+                    className="absolute -bottom-1 left-0 h-0.5 w-full bg-accent"
                     transition={reduced ? { duration: 0 } : { type: "spring", ...SPRING_SOFT }}
                   />
                 )}
@@ -87,14 +87,14 @@ export function Nav() {
             download
             whileHover={reduced ? undefined : { scale: 1.05 }}
             whileTap={reduced ? undefined : { scale: 0.97 }}
-            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-cyan-500 px-4 py-2 text-sm font-semibold text-white"
+            className="btn-primary px-4 py-2.5"
           >
             <Download size={15} /> Resume
           </motion.a>
         </div>
 
         <button
-          className="text-white lg:hidden"
+          className="text-ink lg:hidden"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
           aria-expanded={open}
@@ -122,7 +122,7 @@ export function Nav() {
                     setOpen(false);
                     onAnchorClick(e, l.href);
                   }}
-                  className="rounded-lg px-3 py-2.5 text-sm text-slate-200 hover:bg-white/5"
+                  className="px-3 py-2.5 text-sm text-ink-700 hover:bg-surface"
                 >
                   {l.label}
                 </a>
@@ -130,7 +130,7 @@ export function Nav() {
               <a
                 href={profile.resumePath}
                 download
-                className="mt-2 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white"
+                className="btn-primary mt-3 justify-center px-4 py-3"
               >
                 <Download size={15} /> Download Resume
               </a>
