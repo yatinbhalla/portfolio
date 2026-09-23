@@ -33,7 +33,7 @@
   /* Elevation is offset and warm, never a centred glow. */
   --shadow-card: 0 1px 1px rgba(20, 18, 14, 0.035), 0 10px 24px -14px rgba(20, 18, 14, 0.16);
   --shadow-card-hover: 0 1px 2px rgba(20, 18, 14, 0.05), 0 18px 40px -18px rgba(20, 18, 14, 0.22);
-  --shadow-stack: 0 2px 2px rgba(20, 18, 14, 0.04), 0 24px 48px -28px rgba(20, 18, 14, 0.28);
+  --shadow-stack: 0 1px 0 rgba(20, 18, 14, 0.06), 0 18px 40px -20px rgba(20, 18, 14, 0.38);
 
   --animate-marquee: marquee 32s linear infinite;
 
@@ -117,10 +117,16 @@ html.is-locked body {
   box-shadow: var(--shadow-card);
 }
 
-/* Opaque, and it must stay that way: the Featured cards overlap, and translucent
-   surfaces read as mush the moment they stack. On bone these are sheets of paper. */
+/*
+ * Opaque, and it must stay that way: the Featured cards overlap, and translucent
+ * surfaces read as mush the moment they stack.
+ *
+ * Pure white, not surface-raised: #FBFAF7 sits ~2% off the paper ground, so six
+ * overlapping rectangles read as one continuous block and the stack motion
+ * disappears. White on bone is a real edge — literally sheets on a desk.
+ */
 .panel-solid {
-  background: var(--color-surface-raised);
+  background: #ffffff;
   border: 1px solid var(--color-rule);
   box-shadow: var(--shadow-stack);
 }
@@ -132,8 +138,10 @@ html.is-locked body {
 .card-hover {
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
+/* The accent hairline is the hover signal. A rule-strong border alone is far too
+   quiet on paper — on the dark build this state was carried by a violet glow. */
 .card-hover:hover {
-  border-color: var(--color-rule-strong);
+  border-color: var(--color-accent);
   box-shadow: var(--shadow-card-hover);
 }
 

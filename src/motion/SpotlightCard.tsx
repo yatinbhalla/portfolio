@@ -13,8 +13,8 @@ import { useMotionPrefs } from "./context";
 export function SpotlightCard({
   children,
   className = "",
-  radius = 340,
-  color = "rgba(196, 58, 16, 0.07)",
+  radius = 420,
+  color = "rgba(196, 58, 16, 0.15)",
   as: Tag = "div",
 }: {
   children: ReactNode;

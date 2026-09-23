@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Section } from "./Section";
 import { featured, type FeaturedProject } from "../data/profile";
 import { ExternalLink, Github, TrendingUp } from "lucide-react";
@@ -119,7 +119,7 @@ function StackCard({ p, index, total }: { p: FeaturedProject; index: number; tot
         <SpotlightCard className="panel-solid card-hover p-7 sm:p-8">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-0.5"
+            className="pointer-events-none absolute inset-x-0 top-0 h-1"
             style={{ background: p.accent }}
           />
           <div className="relative">
@@ -131,45 +131,8 @@ function StackCard({ p, index, total }: { p: FeaturedProject; index: number; tot
   );
 }
 
-/**
- * One accent bar per project, cross-faded by opacity.
- *
- * Six static layers rather than one layer whose colour is interpolated: changing a
- * colour every frame repaints, while opacity on a static layer is compositor-only.
- */
-function AccentOrb({
-  accent,
-  index,
-  total,
-  progress,
-}: {
-  accent: string;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  // Clamped into [0, 1] and kept strictly increasing: this range is handed to
-  // WAAPI as keyframe offsets by Motion's scroll-driven optimisation.
-  const lo = Math.max(0, (index - 0.7) / total);
-  const mid = Math.max(lo + 0.0001, index / total);
-  const hi = Math.min(1, Math.max(mid + 0.0001, (index + 0.7) / total));
-  const opacity = useTransform(progress, [lo, mid, hi], [0, 1, 0]);
-  return (
-    <motion.div
-      aria-hidden
-      style={{ opacity, background: accent }}
-      className="absolute top-[12vh] left-0 h-1 w-full"
-    />
-  );
-}
-
 export function Featured() {
   const { canPin } = useMotionPrefs();
-  const listRef = useRef<HTMLUListElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: listRef,
-    offset: ["start start", "end end"],
-  });
 
   return (
     <Section
@@ -182,20 +145,7 @@ export function Featured() {
       }
     >
       {canPin ? (
-        <ul ref={listRef} data-stack className="relative">
-          {/* Sticky and zero-height: follows the scene without adding layout height. */}
-          <li aria-hidden className="pointer-events-none sticky top-0 -z-10 h-0">
-            {featured.map((p, i) => (
-              <AccentOrb
-                key={p.name}
-                accent={p.accent}
-                index={i}
-                total={featured.length}
-                progress={scrollYProgress}
-              />
-            ))}
-          </li>
-
+        <ul data-stack className="relative">
           {featured.map((p, i) => (
             <StackCard key={p.name} p={p} index={i} total={featured.length} />
           ))}
@@ -210,7 +160,7 @@ export function Featured() {
               <article className="panel card-hover relative h-full overflow-hidden p-7">
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-x-0 top-0 h-0.5"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-1"
                   style={{ background: p.accent }}
                 />
                 <div className="relative">
