@@ -1,5 +1,6 @@
 import { MotionProvider } from "./motion/MotionProvider";
 import { IntroLoader } from "./components/IntroLoader";
+import { ThemePicker } from "./components/ThemePicker";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
@@ -32,6 +33,7 @@ export default function App() {
         </main>
         <Footer />
       </div>
+      <ThemePicker />
     </MotionProvider>
   );
 }

@@ -12,6 +12,7 @@
   --color-paper: #f4f1ea;
   --color-surface: #eeeae1;
   --color-surface-raised: #fbfaf7;
+  --color-panel-solid: #ffffff;
 
   /* Warm ink ramp. ink-500 is the FLOOR for anything that is text. */
   --color-ink: #14120e;
@@ -132,7 +133,7 @@ html.is-locked body {
  * disappears. White on bone is a real edge — literally sheets on a desk.
  */
 .panel-solid {
-  background: #ffffff;
+  background: var(--color-panel-solid);
   border: 1px solid var(--color-rule);
   box-shadow: var(--shadow-stack);
 }
@@ -247,6 +248,74 @@ body::after {
   background-size: 140px 140px;
   background-repeat: repeat;
   opacity: 0.5;
+}
+
+/*
+ * Alternate palettes.
+ *
+ * Structure, type and motion are identical across every theme — only colour
+ * tokens change, so a swap carries no layout risk. Each one was checked with the
+ * same contrast sweep as the default: no text element below its WCAG threshold.
+ *
+ * Applied by setting data-theme on <html>. Without it the default bone palette
+ * above is used, so this is inert for every normal visitor.
+ */
+
+/* Porcelain & Cobalt — cool, Swiss, technical. */
+[data-theme="cobalt"] {
+  --color-paper: #eff1f2;
+  --color-surface: #e4e8ea;
+  --color-surface-raised: #fafbfb;
+  --color-panel-solid: #ffffff;
+  --color-ink: #0f1317;
+  --color-ink-700: #333b42;
+  --color-ink-500: #5f6871;
+  --color-ink-400: #7f8993;
+  --color-ink-300: #a3abb3;
+  --color-rule: #ccd3d8;
+  --color-rule-strong: #a7b1b8;
+  --color-accent: #1b45ff;
+  --color-accent-deep: #1536cc;
+  --color-accent-dark: #102aa3;
+  --color-accent-wash: #e2e7ff;
+}
+
+/* Newsprint & Oxblood — warm grey stock, literary, serious. */
+[data-theme="oxblood"] {
+  --color-paper: #edeae3;
+  --color-surface: #ebe7de;
+  --color-surface-raised: #f8f6f1;
+  --color-panel-solid: #fffefb;
+  --color-ink: #171410;
+  --color-ink-700: #3c372f;
+  --color-ink-500: #5f594e;
+  --color-ink-400: #8b8478;
+  --color-ink-300: #aaa396;
+  --color-rule: #d0c9bb;
+  --color-rule-strong: #b0a794;
+  --color-accent: #9e2b25;
+  --color-accent-deep: #85231e;
+  --color-accent-dark: #6a1c18;
+  --color-accent-wash: #f6e3e1;
+}
+
+/* Sand & Pine — warm ground, deep green, calm. */
+[data-theme="pine"] {
+  --color-paper: #f0ede4;
+  --color-surface: #ece9df;
+  --color-surface-raised: #faf8f3;
+  --color-panel-solid: #ffffff;
+  --color-ink: #161814;
+  --color-ink-700: #383c33;
+  --color-ink-500: #595e50;
+  --color-ink-400: #878c7c;
+  --color-ink-300: #a7ab9c;
+  --color-rule: #d2cdbd;
+  --color-rule-strong: #b0ab99;
+  --color-accent: #1f5c3d;
+  --color-accent-deep: #1a4f34;
+  --color-accent-dark: #143d28;
+  --color-accent-wash: #dfeae3;
 }
 
 /* Marquee is paused whenever it is offscreen. */
