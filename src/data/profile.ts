@@ -63,6 +63,16 @@ export const mindset = [
   },
 ];
 
+/**
+ * The sixth cell of the Mindset grid. Five traits leave an orphan row; a sixth
+ * cell divides evenly into both the 2- and 3-column breakpoints. Pulled from the
+ * About copy — a pull quote repeating body text is the point of a pull quote.
+ */
+export const mindsetNote = {
+  eyebrow: "Operating principle",
+  quote: "When generative AI arrived, I did what operators do: I built.",
+};
+
 export type FeaturedProject = {
   name: string;
   headline: string;
