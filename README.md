@@ -6,11 +6,11 @@
 
 Business operator turned AI PM. 3 businesses grown ~30% YoY over 7 years · 20+ AI products shipped 0→1 · 4+ in daily production use.
 
-[![React](https://img.shields.io/badge/React_19-14120E?logo=react&logoColor=F4F1EA)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-14120E?logo=typescript&logoColor=F4F1EA)](https://www.typescriptlang.org)
-[![Vite](https://img.shields.io/badge/Vite_7-14120E?logo=vite&logoColor=F4F1EA)](https://vite.dev)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-14120E?logo=tailwindcss&logoColor=F4F1EA)](https://tailwindcss.com)
-[![Motion](https://img.shields.io/badge/Motion-FF4A1C?logo=framer&logoColor=F4F1EA)](https://motion.dev)
+[![React](https://img.shields.io/badge/React_19-171410?logo=react&logoColor=EDEAE3)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-171410?logo=typescript&logoColor=EDEAE3)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite_7-171410?logo=vite&logoColor=EDEAE3)](https://vite.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-171410?logo=tailwindcss&logoColor=EDEAE3)](https://tailwindcss.com)
+[![Motion](https://img.shields.io/badge/Motion-9E2B25?logo=framer&logoColor=EDEAE3)](https://motion.dev)
 
 **[View the site →](https://portfolio-yatinbhalla.vercel.app)**
 
@@ -40,11 +40,11 @@ It deliberately avoids the dark-gradient-and-glassmorphism look that most genera
 
 ## Design system
 
-**Palette** — paper `#F4F1EA`, warm ink ramp `#14120E → #3A362E → #6B6459`, hairlines `#D5CEC0`, and a single signal accent `#FF4A1C`. The accent is used for fills, marks and rules only: at 2.98:1 on paper it is never text, so accent text is always the deeper `#C43A10`.
+**Palette** — newsprint `#EDEAE3`, warm ink ramp `#171410 → #3C372F → #5F594E`, hairlines `#D0C9BB`, and a single oxblood accent `#9E2B25`. The accent is dark enough to carry text (6.18:1 on paper), with the deeper `#85231E` used for accent text and for state that must read against its own track.
 
 **Type** — [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif) for the masthead (weight 400 only, restricted to the hero `h1` and section `h2`), [Instrument Sans](https://fonts.google.com/specimen/Instrument+Sans) for UI, and [DM Mono](https://fonts.google.com/specimen/DM+Mono) for every label, numeral and metadata line.
 
-**Accessibility** — every text element is verified against its resolved background; the page passes WCAG AA with a minimum contrast ratio of 4.70:1. `prefers-reduced-motion` degrades to static-but-complete: pinned scenes unpin, parallax and smooth scroll switch off, and all content stays present.
+**Accessibility** — every text element is verified against its resolved background; the page passes WCAG AA with a minimum contrast ratio of 5.17:1. `prefers-reduced-motion` degrades to static-but-complete: pinned scenes unpin, parallax and smooth scroll switch off, and all content stays present.
 
 ## Motion
 
