@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { Section } from "./Section";
 import { featured, type FeaturedProject } from "../data/profile";
 import { ExternalLink, Github, TrendingUp } from "lucide-react";
@@ -85,26 +85,35 @@ function CardBody({ p }: { p: FeaturedProject }) {
   );
 }
 
-/** One sticky card. A separate component because it owns its own useScroll. */
-function StackCard({ p, index, total }: { p: FeaturedProject; index: number; total: number }) {
-  const ref = useRef<HTMLLIElement>(null);
-  // 0 when this card pins, 1 once its box has scrolled fully past the top.
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
+/**
+ * One sticky card.
+ *
+ * Progress is derived from the whole list, NOT from this <li>. The li is
+ * position: sticky, so while it is pinned its rect stays fixed relative to the
+ * viewport and a useScroll targeting it reports a frozen value — which is why
+ * the cards previously never scaled or dimmed at all.
+ */
+function StackCard({
+  p,
+  index,
+  total,
+  progress,
+}: {
+  p: FeaturedProject;
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+}) {
   const isLast = index === total - 1;
-  const scale = useTransform(scrollYProgress, [0, 1], [1, isLast ? 1 : SCENE.featuredMinScale]);
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [1, isLast ? 1 : SCENE.featuredMinOpacity],
-  );
+  // Kept inside [0,1] and increasing: Motion hands this range to WAAPI as
+  // keyframe offsets for the scroll-driven animation.
+  const start = index / total;
+  const end = Math.min(1, (index + 1) / total);
+  const scale = useTransform(progress, [start, end], [1, isLast ? 1 : SCENE.featuredMinScale]);
+  const opacity = useTransform(progress, [start, end], [1, isLast ? 1 : SCENE.featuredMinOpacity]);
 
   return (
     <li
-      ref={ref}
       data-stack-item
       className="sticky"
       style={{
@@ -133,6 +142,11 @@ function StackCard({ p, index, total }: { p: FeaturedProject; index: number; tot
 
 export function Featured() {
   const { canPin } = useMotionPrefs();
+  const listRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: listRef,
+    offset: ["start start", "end end"],
+  });
 
   return (
     <Section
@@ -144,10 +158,24 @@ export function Featured() {
         </>
       }
     >
+      {/*
+        The scroll target lives on a wrapper that renders in BOTH branches. canPin
+        starts false and flips in an effect, so a ref that only exists in the
+        pinned branch is not attached when useScroll first measures — and it then
+        reports a frozen progress of 0 forever, which is why the cards never
+        scaled or dimmed.
+      */}
+      <div ref={listRef}>
       {canPin ? (
         <ul data-stack className="relative">
           {featured.map((p, i) => (
-            <StackCard key={p.name} p={p} index={i} total={featured.length} />
+            <StackCard
+              key={p.name}
+              p={p}
+              index={i}
+              total={featured.length}
+              progress={scrollYProgress}
+            />
           ))}
 
           {/* Tail so the final card dwells before the scene releases. */}
@@ -171,6 +199,7 @@ export function Featured() {
           ))}
         </StaggerGroup>
       )}
+      </div>
     </Section>
   );
 }

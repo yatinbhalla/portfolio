@@ -25,6 +25,34 @@ export function IntroLoader() {
     return () => events.forEach((e) => window.removeEventListener(e, skip));
   }, [done]);
 
+  /*
+   * Hard safety release.
+   *
+   * finish() normally fires from onAnimationComplete, but this panel holds a
+   * scroll lock while it is up, and an animation that never completes therefore
+   * leaves the whole page permanently unscrollable with every scroll-linked
+   * effect dead. That is not hypothetical: a tab opened in the background has
+   * its animation frames throttled, so the wipe never finishes — and opening a
+   * link in a background tab is completely routine.
+   *
+   * So the lock is released on a timer that does not depend on the animation,
+   * and immediately if the document is not visible in the first place.
+   */
+  useEffect(() => {
+    if (done) return;
+    if (document.hidden) {
+      finish();
+      return;
+    }
+    const onHide = () => document.hidden && finish();
+    document.addEventListener("visibilitychange", onHide);
+    const bail = window.setTimeout(finish, 1600);
+    return () => {
+      document.removeEventListener("visibilitychange", onHide);
+      window.clearTimeout(bail);
+    };
+  }, [done, finish]);
+
   if (done) return null;
 
   return (

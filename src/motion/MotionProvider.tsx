@@ -104,6 +104,14 @@ export function MotionProvider({ children }: { children: ReactNode }) {
     document.documentElement.classList.add("is-locked");
   }, [introActive, lenis]);
 
+  // The lock must never survive this component, whatever happened to the intro.
+  useEffect(
+    () => () => {
+      document.documentElement.classList.remove("is-locked");
+    },
+    [],
+  );
+
   return (
     <MotionConfig
       reducedMotion="user"

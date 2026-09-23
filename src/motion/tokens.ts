@@ -34,4 +34,4 @@ export const SCENE = {
 
 /** Pinned scenes are desktop-only: thumb-scrolling pinned content is where this design fails. */
 export const PIN_MIN_WIDTH = 1024;
-export const PIN_MIN_HEIGHT = 620;
+export const PIN_MIN_HEIGHT = 540;
