@@ -2,7 +2,8 @@ import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { Section } from "./Section";
 import { useGithubRepos } from "../hooks/useGithubRepos";
-import { ExternalLink, Github, Search } from "lucide-react";
+import { profile } from "../data/profile";
+import { ArrowUpRight, ChevronDown, ExternalLink, Github, Search } from "lucide-react";
 import { StaggerGroup, StaggerItem } from "../motion/Stagger";
 import { SpotlightCard } from "../motion/SpotlightCard";
 
@@ -13,9 +14,16 @@ const langColors: Record<string, string> = {
   HTML: "#e34c26",
 };
 
+/**
+ * Six, not five or nine: it divides evenly into both the 2-column and 3-column
+ * breakpoints, so the first screen is always a complete rectangle.
+ */
+const PREVIEW_COUNT = 6;
+
 export function Projects() {
   const { repos, live } = useGithubRepos();
   const [query, setQuery] = useState("");
+  const [showAll, setShowAll] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
   const [floor, setFloor] = useState<number>();
 
@@ -36,6 +44,12 @@ export function Projects() {
     );
   }, [repos, query]);
 
+  // Searching always searches everything; the cap only applies to the resting view.
+  const isSearching = query.trim().length > 0;
+  const collapsed = !isSearching && !showAll;
+  const visible = collapsed ? filtered.slice(0, PREVIEW_COUNT) : filtered;
+  const hidden = filtered.length - visible.length;
+
   return (
     <Section
       id="projects"
@@ -49,7 +63,12 @@ export function Projects() {
       <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <p className="text-sm text-ink-500">
           {live ? "Fetched live from GitHub" : "Snapshot from GitHub"} ·{" "}
-          {filtered.length} public repositories
+          {isSearching
+            ? `${filtered.length} matching`
+            : collapsed
+              ? `showing ${visible.length} of ${filtered.length}`
+              : `all ${filtered.length}`}{" "}
+          public repositories
         </p>
         <label className="panel flex w-full items-center gap-2 px-4 py-2.5 transition-colors focus-within:border-accent-deep sm:w-72">
           <Search size={16} className="shrink-0 text-ink-500" />
@@ -63,7 +82,7 @@ export function Projects() {
       </div>
 
       {/*
-        Deliberately no layout animation here: reflowing 23 cards on every
+        Deliberately no layout animation here: reflowing the grid on every
         keystroke is the most expensive thing on the page for the least payoff.
       */}
       <div ref={gridRef} style={floor ? { minHeight: floor } : undefined}>
@@ -73,7 +92,7 @@ export function Projects() {
           stagger={0.035}
           amount={0.05}
         >
-          {filtered.map((r) => (
+          {visible.map((r) => (
             <StaggerItem key={r.name} as="li" hoverLift={5} className="h-full">
               <SpotlightCard as="article" className="panel card-hover flex h-full flex-col p-5">
                 <div className="flex items-start justify-between gap-3">
@@ -133,6 +152,38 @@ export function Projects() {
 
       {filtered.length === 0 && (
         <p className="py-12 text-center text-ink-500">No projects match "{query}".</p>
+      )}
+
+      {/* Expands in place rather than sending the visitor away mid-page; the
+          GitHub link stays available for anyone who wants the source of truth. */}
+      {!isSearching && filtered.length > PREVIEW_COUNT && (
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-t border-rule pt-8">
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            className="btn-primary px-7 py-4"
+          >
+            {collapsed ? `Show all ${filtered.length} projects` : "Show fewer"}
+            <ChevronDown
+              size={15}
+              strokeWidth={1.75}
+              className={`transition-transform duration-200 ${collapsed ? "" : "rotate-180"}`}
+            />
+          </button>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-quiet"
+          >
+            Browse on GitHub <ArrowUpRight size={15} strokeWidth={1.75} />
+          </a>
+          {collapsed && (
+            <span className="font-mono text-[11px] tracking-[0.16em] text-ink-500 uppercase">
+              {hidden} more
+            </span>
+          )}
+        </div>
       )}
     </Section>
   );
